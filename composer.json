@@ -1,0 +1,17 @@
+{
+    "name": "vendor/flunorette",
+    "description": "Description of project Flunorette.",
+    "authors": [
+        {
+            "name": "Daniel Soukal",
+            "email": "webdev.daso@gmail.com"
+        }
+    ],
+    "require": {
+
+    },
+    "require-dev": {
+        "nette/tester": "~1.0.0",
+        "nette/nette": "~2.0.14"
+    }
+}

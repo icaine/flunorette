@@ -1,0 +1,8 @@
+Flunorette\Row Object
+(
+    [id] => 1
+    [created_by] => 0
+    [type] => admin
+    [name] => Dan
+    [city_id] => 1
+)

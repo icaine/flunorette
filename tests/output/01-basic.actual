@@ -1,0 +1,13 @@
+Array
+(
+    [0] => Flunorette\Row Object
+        (
+            [name] => Dan
+        )
+
+    [1] => Flunorette\Row Object
+        (
+            [name] => David
+        )
+
+)

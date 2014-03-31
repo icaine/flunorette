@@ -1,0 +1,1 @@
+SELECT oxwner.`id` FROM author AS `owner` WHERE id = ? OR `id` = 2 OR name IN ('Dan', 'marek', 1, 2) OR `name` LIKE '%a%'
