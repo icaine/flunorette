@@ -77,6 +77,10 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 		return $this->getSqlBuilder()->getParameters();
 	}
 
+	public function __toString() {
+		return $this->getSqlBuilder()->getQueryExpanded();
+	}
+
 	public function getHash() {
 		return md5(serialize(array($this->getQuery(), $this->getParameters())));
 	}

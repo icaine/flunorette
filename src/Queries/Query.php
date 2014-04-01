@@ -197,7 +197,7 @@ abstract class Query implements IQueryObject {
 			return $this;
 		}
 		if ($statement instanceof IQueryObject) {
-			return $this->addStatement($clause, $statement->getQuery(), $statement->getParameters());
+			return $this->addStatement($clause, $statement, $statement->getParameters());
 		}
 
 		$args = func_get_args();

@@ -95,7 +95,7 @@ abstract class JoinableQuery extends Query {
 	 * @return string  rewrited $statement (e.g. tab1.tab2:col => tab2.col)
 	 */
 	private function createUndefinedJoins($statement) {
-		if (!$this->isSmartJoinEnabled()) {
+		if (!$this->isSmartJoinEnabled() || $statement instanceof IQueryObject) {
 			return $statement;
 		}
 		preg_match_all('~\\b([a-z_][#a-z0-9_.:]*[.:])[a-z_]*~i', $statement, $matches);

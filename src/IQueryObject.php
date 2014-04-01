@@ -10,4 +10,6 @@ interface IQueryObject {
 
 	public function getHash();
 
+	public function __toString();
+
 }
