@@ -345,7 +345,7 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 	 * @return self
 	 */
 	public function page($page, $itemsPerPage, &$numOfPages = null) {
-		if (func_get_args() > 2) {
+		if (func_num_args() > 2) {
 			$numOfPages = (int) ceil($this->count('*') / $itemsPerPage);
 		}
 		return $this->limit($itemsPerPage, ($page - 1) * $itemsPerPage);
