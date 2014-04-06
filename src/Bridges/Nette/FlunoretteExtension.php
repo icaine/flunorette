@@ -76,7 +76,7 @@ class FlunoretteExtension extends CompilerExtension {
 	private function validate(array $config, array $expected, $name) {
 		if ($extra = array_diff_key($config, $expected)) {
 			$extra = implode(", $name.", array_keys($extra));
-			throw new Nette\InvalidStateException("Unknown option $name.$extra.");
+			throw new \Nette\InvalidStateException("Unknown option $name.$extra.");
 		}
 	}
 
