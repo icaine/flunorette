@@ -218,7 +218,7 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 	public function fetchPairs($key = null, $value = NULL) {
 		$return = array();
 		if (null === $key) {
-			$key = $this->getPrimarySequence();
+			$key = $this->getPrimary();
 		}
 
 		foreach ($this as $row) {
