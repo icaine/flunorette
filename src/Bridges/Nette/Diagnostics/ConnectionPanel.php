@@ -16,6 +16,9 @@ class ConnectionPanel extends Nette\Object implements Nette\Diagnostics\IBarPane
 	/** @var int maximum SQL length */
 	static public $maxLength = 1000;
 
+	/** @var array paths that should be ignored when printing where query was executed from */
+	public $ignoredPaths = array();
+
 	/** @var int */
 	public $maxQueries = 100;
 
@@ -37,9 +40,14 @@ class ConnectionPanel extends Nette\Object implements Nette\Diagnostics\IBarPane
 	/** @var bool */
 	public $disabled = FALSE;
 
-	public function __construct(Connection $connection = null) {
-		if ($connection) {
+	function __construct($connection = null) {
+		if ($connection !== null && $connection instanceof Connection) {
 			$connection->onQuery[] = array($this, 'logQuery');
+		}
+
+		$this->ignoredPaths[] = dirname(dirname(dirname(__DIR__)));
+		if (defined('NETTE_DIR')) {
+			$this->ignoredPaths[] = NETTE_DIR;
 		}
 	}
 
@@ -50,16 +58,8 @@ class ConnectionPanel extends Nette\Object implements Nette\Diagnostics\IBarPane
 
 		$source = NULL;
 		foreach (debug_backtrace(FALSE) as $row) {
-			if (isset($row['file']) && is_file($row['file']) && strpos($row['file'], NETTE_DIR . DIRECTORY_SEPARATOR) !== 0) {
+			if (isset($row['file']) && is_file($row['file']) && !$this->isIgnoredPath($row['file'])) {
 				if (isset($row['function']) && strpos($row['function'], 'call_user_func') === 0) {
-					continue;
-				}
-				if (isset($row['class']) && (
-					is_a($row['class'], 'Flunorette\\Connection', true) ||
-					is_a($row['class'], 'Flunorette\\Selection', true) ||
-					is_a($row['class'], 'PDOStatement', true) ||
-					$row['class'] == 'Nette\\Object'
-					)) {
 					continue;
 				}
 				$source = array($row['file'], (int) $row['line']);
@@ -206,12 +206,17 @@ class ConnectionPanel extends Nette\Object implements Nette\Diagnostics\IBarPane
 			</div>';
 	}
 
-	static public function createDebugPanel($connection, $explain = TRUE, $name = NULL) {
-		$panel = new static($connection);
-		$panel->explain = $explain;
-		$panel->name = $name;
-		Nette\Diagnostics\Debugger::getBar()->addPanel($panel);
-		return $panel;
+	/**
+	 * @param string
+	 * @return bool
+	 */
+	protected function isIgnoredPath($file) {
+		foreach ($this->ignoredPaths as $path) {
+			if (strpos(strtr($file, '\\', '/'), strtr("$path/", '\\', '/')) === 0) {
+				return TRUE;
+			}
+		}
+		return FALSE;
 	}
 
 }

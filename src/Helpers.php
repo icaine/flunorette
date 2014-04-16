@@ -2,6 +2,10 @@
 
 namespace Flunorette;
 
+use Flunorette\Bridges\Nette\Diagnostics\ConnectionPanel;
+use Flunorette\Utils\Strings;
+use Nette\Diagnostics\Debugger;
+
 class Helpers {
 
 	/** @var int maximum SQL length */
@@ -24,14 +28,14 @@ class Helpers {
 	 * Displays complete result set as HTML table for debug purposes.
 	 * @return void
 	 */
-	public static function dumpResult(ResultSet $result) {
-		echo "\n<table class=\"dump\">\n<caption>" . htmlSpecialChars($result->getQueryString()) . "</caption>\n";
-		if (!$result->getColumnCount()) {
-			echo "\t<tr>\n\t\t<th>Affected rows:</th>\n\t\t<td>", $result->getRowCount(), "</td>\n\t</tr>\n</table>\n";
+	public static function dumpResult(Statement $statement) {
+		echo "\n<table class=\"dump\">\n<caption>" . htmlSpecialChars($statement->queryString) . "</caption>\n";
+		if (!$statement->columnCount()) {
+			echo "\t<tr>\n\t\t<th>Affected rows:</th>\n\t\t<td>", $statement->rowCount(), "</td>\n\t</tr>\n</table>\n";
 			return;
 		}
 		$i = 0;
-		foreach ($result as $row) {
+		foreach ($statement as $row) {
 			if ($i === 0) {
 				echo "<thead>\n\t<tr>\n\t\t<th>#row</th>\n";
 				foreach ($row as $col => $foo) {
@@ -98,7 +102,7 @@ class Helpers {
 			if (is_string($param) && (preg_match('#[^\x09\x0A\x0D\x20-\x7E\xA0-\x{10FFFF}]#u', $param) || preg_last_error())) {
 				return '<i title="Length ' . strlen($param) . ' bytes">&lt;binary&gt;</i>';
 			} elseif (is_string($param)) {
-				return '<span title="Length ' . Nette\Utils\Strings::length($param) . ' characters">\'' . htmlspecialchars(Nette\Utils\Strings::truncate($param, Helpers::$maxLength)) . "'</span>";
+				return '<span title="Length ' . Strings::length($param) . ' characters">\'' . htmlspecialchars(Strings::truncate($param, self::$maxLength)) . "'</span>";
 			} elseif (is_resource($param)) {
 				$type = get_resource_type($param);
 				if ($type === 'stream') {
@@ -117,7 +121,7 @@ class Helpers {
 	 * Common column type detection.
 	 * @return array
 	 */
-	public static function detectTypes(\PDOStatement $statement) {
+	public static function detectTypes(Statement $statement) {
 		$types = array();
 		$count = $statement->columnCount(); // driver must be meta-aware, see PHP bugs #53782, #54695
 		for ($col = 0; $col < $count; $col++) {
@@ -179,11 +183,15 @@ class Helpers {
 		return $count;
 	}
 
-	public static function createDebugPanel($connection, $explain = TRUE, $name = NULL) {
-		$panel = new Diagnostics\ConnectionPanel($connection);
+	public static function createDebugPanel(Connection $connection, $explain = TRUE, $name = NULL) {
+		$panel = new ConnectionPanel($connection);
 		$panel->explain = $explain;
 		$panel->name = $name;
-		Nette\Diagnostics\Debugger::getBar()->addPanel($panel);
+		if (isset(Debugger::$bar)) { //BC with 2.0
+			Debugger::$bar->addPanel($panel);
+		} else { //2.1
+			Debugger::getBar()->addPanel($panel);
+		}
 		return $panel;
 	}
 
@@ -245,7 +253,7 @@ class Helpers {
 
 	/** @return bool when array key begins with ':' */
 	static public function containsNamedParams(&$array) {
-		return is_array($array) && is_string(key($array)) && Utils\Strings::startsWith(key($array), ':');
+		return is_array($array) && is_string(key($array)) && Strings::startsWith(key($array), ':');
 	}
 
 }

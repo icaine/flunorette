@@ -68,7 +68,7 @@ class FlunoretteExtension extends CompilerExtension {
 			));
 
 			if ($container->parameters['debugMode'] && $info['debugger']) {
-				$connection->addSetup('Flunorette\\Bridges\\Nette\\Diagnostics\\ConnectionPanel::createDebugPanel', array($connection, !empty($info['explain']), $name));
+				$connection->addSetup('Flunorette\\Helpers::createDebugPanel', array($connection, !empty($info['explain']), $name));
 			}
 		}
 	}
