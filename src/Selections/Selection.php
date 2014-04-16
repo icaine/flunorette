@@ -273,6 +273,28 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 	}
 
 	/**
+	 * Adds join clause.
+	 * @note Primarily inteded for better control over the query when some "filtering" is needed.
+	 * @param string e.g. "t2 ON t1.id = t2.parent_id"
+	 * @return self
+	 */
+	public function join($clause) {
+		$this->callSqlBuilder('join', func_get_args());
+		return $this;
+	}
+
+	/**
+	 * Adds left join clause.
+	 * @note Primarily inteded for better control over the query when some "filtering" is needed.
+	 * @param string e.g. "t2 ON t1.id = t2.parent_id"
+	 * @return self
+	 */
+	public function leftJoin($clause) {
+		$this->callSqlBuilder('leftJoin', func_get_args());
+		return $this;
+	}
+
+	/**
 	 * Method is deprecated, use wherePrimary() instead.
 	 * @return self
 	 */
