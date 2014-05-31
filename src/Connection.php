@@ -280,7 +280,7 @@ class Connection extends Object {
 	}
 
 	/**
-	 * Shortcut for query()->fetchField()
+	 * Shortcut for query()->fetchField(0)
 	 * @param  string  statement
 	 * @param  mixed   [parameters, ...]
 	 * @return mixed
@@ -291,7 +291,7 @@ class Connection extends Object {
 	}
 
 	/**
-	 * Shortcut for query()->fetchColumn()
+	 * Shortcut for query()->fetchColumn(0)
 	 * @param  string  statement
 	 * @param  mixed   [parameters, ...]
 	 * @return mixed

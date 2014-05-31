@@ -11,7 +11,7 @@ $connection = new Connection('mysql:dbname=flunorette_blog;host=127.0.0.1', 'roo
 $connection->setCacheStorage($cacheStorage = new FileStorage(__DIR__ . '/temp'));
 $connection->getCache()->clean(array(Cache::ALL => true));
 
-//Helpers::loadFromFile($connection, __DIR__ . '/flunorette_blog.sql');
+Helpers::loadFromFile($connection, __DIR__ . '/flunorette_blog.sql');
 
 global $panel;
 
