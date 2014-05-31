@@ -2,6 +2,8 @@
 
 namespace Flunorette;
 
+use Nette\Utils\Strings;
+
 /**
  * CommonQuery adds JOIN clauses for (SELECT, UPDATE, DELETE)
  */
@@ -58,7 +60,7 @@ abstract class JoinableQuery extends Query {
 		}
 
 		$args = array_merge(array($clause), $parameters);
-		if (Utils\Strings::contains($clause, 'JOIN')) {
+		if (Strings::contains($clause, 'JOIN')) {
 			return call_user_func_array(array($this, 'addJoinStatements'), $args);
 		}
 		return call_user_func_array(array($this, 'processStatement'), $args);

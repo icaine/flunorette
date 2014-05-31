@@ -3,8 +3,8 @@
 namespace Flunorette;
 
 use Flunorette\Drivers\IDriver;
-use Flunorette\Utils\Arrays;
 use Nette\Object;
+use Nette\Utils\Arrays;
 
 class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess, \Countable {
 

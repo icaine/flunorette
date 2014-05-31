@@ -5,7 +5,7 @@ namespace Flunorette;
 use DateTime;
 use DateTimeInterface;
 use Flunorette\Drivers\IDriver;
-use Flunorette\Utils\Strings;
+use Nette\Utils\Strings;
 use Traversable;
 
 /**

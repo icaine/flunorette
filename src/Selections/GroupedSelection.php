@@ -2,7 +2,7 @@
 
 namespace Flunorette;
 
-use Flunorette\Utils\Arrays;
+use Nette\Utils\Arrays;
 
 class GroupedSelection extends Selection {
 

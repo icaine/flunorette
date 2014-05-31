@@ -3,8 +3,8 @@
 namespace Flunorette;
 
 use Flunorette\Bridges\Nette\Diagnostics\ConnectionPanel;
-use Flunorette\Utils\Strings;
 use Nette\Diagnostics\Debugger;
+use Nette\Utils\Strings;
 
 class Helpers {
 
