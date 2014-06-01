@@ -5,12 +5,10 @@
  *
  * @author     David Grudl
  * @dataProvider? databases.ini  mysql
- * @skip
 */
 
-return '';
 
-$query = 'mysql';
+
 require __DIR__ . '/connect.inc.php'; // create $connection
 
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . '/mysql-nette_test3.sql');
@@ -31,7 +29,7 @@ Assert::equal( array(
 	'float' => 1.0,
 	'double' => 1.1,
 	'date' => new Nette\DateTime('2012-10-13'),
-	'time' => new Nette\DateTime('10:10:10'),
+	'time' => new DateInterval('PT10H10M10S'),
 	'datetime' => new Nette\DateTime('2012-10-13 10:10:10'),
 	'timestamp' => new Nette\DateTime('2012-10-13 10:10:10'),
 	'year' => PHP_VERSION_ID < 50417 ? '2012' : 2012, // PHP bug #48724
@@ -64,7 +62,7 @@ Assert::equal( array(
 	'float' => 0.5,
 	'double' => 0.5,
 	'date' => new Nette\DateTime('0000-00-00 00:00:00'),
-	'time' => new Nette\DateTime('00:00:00'),
+	'time' => new DateInterval('P0D'),
 	'datetime' => new Nette\DateTime('0000-00-00 00:00:00'),
 	'timestamp' => new Nette\DateTime('0000-00-00 00:00:00'),
 	'year' => PHP_VERSION_ID < 50417 ? '2000' : 2000, // PHP bug #48724
