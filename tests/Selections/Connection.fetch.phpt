@@ -24,7 +24,7 @@ Assert::same(array(
 
 
 // fetchColumn
-Assert::same('Jakub Vrana', $connection->fetchColumn('SELECT name FROM author ORDER BY id'));
+Assert::same(array('Jakub Vrana', 'David Grudl', 'Geek'), $connection->fetchColumn('SELECT name FROM author ORDER BY id'));
 
 
 // fetchPairs

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Test: Nette\Database\Table: Fetch pairs.
+ * Test: Flunorette\Selection: Fetch pairs, column and field
  *
  * @author     Jakub Vrana
  * @author     Jan Skrasek
@@ -49,3 +49,18 @@ Assert::same(array(
 	'2002-02-02 00:00:00' => 'David Grudl',
 	'2002-02-20 00:00:00' => 'Jakub Vrana',
 ), $list);
+
+
+
+$apps = $connection->table('book')->order('title')->fetchColumn('id');  // SELECT * FROM `book` ORDER BY `title`
+Assert::same(array(
+	1,
+	4,
+	2,
+	3,
+), $apps);
+
+
+
+$books = $connection->table('book')->order('title')->select('COUNT(*) AS cnt')->fetchField('cnt');  // SELECT * FROM `book` ORDER BY `title`
+Assert::same(4, $books);

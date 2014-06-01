@@ -3,6 +3,7 @@
 namespace Flunorette;
 
 use Flunorette\Drivers\IDriver;
+use Flunorette\Hydrators\HydratorSelection;
 use Nette\Object;
 use Nette\Utils\Arrays;
 
@@ -228,8 +229,26 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 	}
 
 	/**
+	 * Returns all values from specified $column
+	 * @param mixed $column index or key
+	 * @return array
+	 */
+	public function fetchColumn($column = 0) {
+		return $this->hydrate(new Hydrators\HydratorColumn($column));
+	}
+
+	/**
+	 * Returns single value from specified $column
+	 * @param mixed $column index or key
+	 * @return mixed
+	 */
+	public function fetchField($column) {
+		return $this->hydrate(new Hydrators\HydratorField($column));
+	}
+
+	/**
 	 * Custom fetch mode
-	 * @param mixed $hydrator
+	 * @param mixed $hydrator Any hydrator or callback(Statement)
 	 * @return mixed
 	 * @throws PDOException
 	 * @see Statement::hydrate()
@@ -491,7 +510,7 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 		}
 
 		if (null === self::$hydrator) {
-			self::$hydrator = new HydratorSelectionDefault();
+			self::$hydrator = new HydratorSelection();
 		}
 		$this->data = $this->rows = self::$hydrator->setSelection($this)->hydrate($result);
 

@@ -86,12 +86,20 @@ class Statement extends PDOStatement {
 
 	/**
 	 * Fetches single field.
+	 * @param mixed $column index or key
 	 * @return mixed|FALSE
 	 */
 	public function fetchField($column = 0) {
-		$data = (array) $this->fetch();
-		$row = array_values($data) + $data;
-		return $row ? $row[$column] : FALSE;
+		return $this->hydrate(new Hydrators\HydratorField($column));
+	}
+
+	/**
+	 * Fetches all values from given $column
+	 * @param mixed $column index or key
+	 * @return array
+	 */
+	public function fetchColumn($column = 0) {
+		return $this->hydrate(new Hydrators\HydratorColumn($column, true));
 	}
 
 	/**
@@ -102,11 +110,12 @@ class Statement extends PDOStatement {
 	public function normalizeRow($row) {
 		if ($this->columnTypes === NULL) {
 			$this->columnTypes = (array) $this->driver->getColumnTypes($this);
+			$this->columnTypes += array_values($this->columnTypes);
 		}
 
 		$row = (array) $row;
-		foreach ($this->columnTypes as $key => $type) {
-			$value = $row[$key];
+		foreach ($row as $key => $value) {
+			$type = $this->columnTypes[$key];
 			if ($value === NULL || $value === FALSE || $type === IReflection::FIELD_TEXT) {
 
 			} elseif ($type === IReflection::FIELD_INTEGER) {
