@@ -1,36 +1,38 @@
 <?php
 
-namespace Flunorette;
+namespace Flunorette\Queries;
+
+use Flunorette\Connection;
 
 /**
  * select methods
- * @method \Flunorette\QueryBuilder select($column) add one or more columns in SELECT to query
- * @method \Flunorette\QueryBuilder having($statement) add HAVING query
- * @method \Flunorette\QueryBuilder offset(int $offset) add OFFSET to query
+ * @method QueryBuilder select($column) add one or more columns in SELECT to query
+ * @method QueryBuilder having($statement) add HAVING query
+ * @method QueryBuilder offset(int $offset) add OFFSET to query
  *
  * delete methods
- * @method \Flunorette\QueryBuilder from(string $table) add LIMIT to query
+ * @method QueryBuilder from(string $table) add LIMIT to query
  *
  * update methods
- * //method \Flunorette\QueryBuilder	set($fieldOrArray, $value = null)
+ * //method \Flunorette\Queries\QueryBuilder	set($fieldOrArray, $value = null)
  *
  * insert methods
- * @method \Flunorette\QueryBuilder ignore()
- * //method \Flunorette\QueryBuilder onDuplicateKeyUpdate($values)
- * //method \Flunorette\QueryBuilder values($values)
+ * @method QueryBuilder ignore()
+ * //method \Flunorette\Queries\QueryBuilder onDuplicateKeyUpdate($values)
+ * //method \Flunorette\Queries\QueryBuilder values($values)
  *
  * common methods except insert
- * @method \Flunorette\QueryBuilder join($statement) add LEFT JOIN to query ($statement can be 'table' name only or 'table:' means back reference)
- * @method \Flunorette\QueryBuilder leftJoin($statement) add LEFT JOIN to query ($statement can be 'table' name only or 'table:' means back reference)
- * @method \Flunorette\QueryBuilder innerJoin($statement) add INNER JOIN to query ($statement can be 'table' name only or 'table:' means back reference)
- * @method \Flunorette\QueryBuilder where($statement) add WHERE to query
- * @method \Flunorette\QueryBuilder wherePrimary($id) add WHERE with primary key
- * @method \Flunorette\QueryBuilder groupBy($statement) add GROUP BY to query
- * @method \Flunorette\QueryBuilder orderBy($statement) add ORDER BY to query
- * @method \Flunorette\QueryBuilder limit(int $limit) add LIMIT to query
+ * @method QueryBuilder join($statement) add LEFT JOIN to query ($statement can be 'table' name only or 'table:' means back reference)
+ * @method QueryBuilder leftJoin($statement) add LEFT JOIN to query ($statement can be 'table' name only or 'table:' means back reference)
+ * @method QueryBuilder innerJoin($statement) add INNER JOIN to query ($statement can be 'table' name only or 'table:' means back reference)
+ * @method QueryBuilder where($statement) add WHERE to query
+ * @method QueryBuilder wherePrimary($id) add WHERE with primary key
+ * @method QueryBuilder groupBy($statement) add GROUP BY to query
+ * @method QueryBuilder orderBy($statement) add ORDER BY to query
+ * @method QueryBuilder limit(int $limit) add LIMIT to query
  *
- * @method \Flunorette\QueryBuilder enableSmartJoin()
- * @method \Flunorette\QueryBuilder disableSmartJoin()
+ * @method QueryBuilder enableSmartJoin()
+ * @method QueryBuilder disableSmartJoin()
  *
  */
 class QueryBuilder {

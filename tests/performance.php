@@ -15,7 +15,7 @@ $cacheStorage = new Nette\Caching\Storages\FileStorage(__DIR__ . '/temp');
 if ($flunorette) {
 	$connection = new \Flunorette\Connection('mysql:dbname=employees', 'root', '');
 	$connection->setCacheStorage($useCache ? $cacheStorage : NULL);
-	$connection->setDatabaseReflection(new Flunorette\DiscoveredReflection($connection));
+	$connection->setDatabaseReflection(new \Flunorette\Reflections\DiscoveredReflection($connection));
 	Nette\Diagnostics\Debugger::$bar->addPanel($panel = new Flunorette\Bridges\Nette\Diagnostics\ConnectionPanel);
 } else {
 	$connection = new Nette\Database\Connection('mysql:dbname=employees', 'root', '');

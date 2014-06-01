@@ -5,6 +5,7 @@ namespace Flunorette;
 use DateTime;
 use DateTimeInterface;
 use Flunorette\Drivers\IDriver;
+use Flunorette\Selections\ActiveRow;
 use Nette\Utils\Strings;
 use Traversable;
 

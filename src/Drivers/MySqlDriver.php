@@ -4,7 +4,7 @@ namespace Flunorette\Drivers;
 
 use Flunorette\Connection;
 use Flunorette\Helpers;
-use Flunorette\IReflection;
+use Flunorette\Reflections\IReflection;
 use PDOStatement;
 
 class MySqlDriver implements IDriver {

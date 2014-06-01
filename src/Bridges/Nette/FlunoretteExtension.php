@@ -16,7 +16,7 @@ class FlunoretteExtension extends CompilerExtension {
 		'options' => null,
 		'debugger' => true,
 		'explain' => true,
-		'reflection' => 'Flunorette\DiscoveredReflection',
+		'reflection' => 'Flunorette\\Reflections\\DiscoveredReflection',
 		'autowired' => null,
 		'lazy' => true,
 		'transactionCounter' => true
@@ -53,14 +53,14 @@ class FlunoretteExtension extends CompilerExtension {
 			if (!$info['reflection']) {
 				$reflection = null;
 			} elseif (is_string($info['reflection'])) {
-				$reflection = new Statement(preg_match('#^[a-z]+\z#', $info['reflection']) ? 'Flunorette\\' . ucfirst($info['reflection']) . 'Reflection' : $info['reflection'], strtolower($info['reflection']) === 'discovered' ? array('@self') : array());
+				$reflection = new Statement(preg_match('#^[a-z]+\z#', $info['reflection']) ? 'Flunorette\\Reflections\\' . ucfirst($info['reflection']) . 'Reflection' : $info['reflection'], strtolower($info['reflection']) === 'discovered' ? array('@self') : array());
 			} else {
 				$tmp = Compiler::filterArguments(array($info['reflection']));
 				$reflection = reset($tmp);
 			}
 
 			$connection = $container->addDefinition($this->prefix($name))
-				->setClass('Flunorette\Connection', array($info['dsn'], $info['user'], $info['password'], $info['options']))
+				->setClass('Flunorette\\Connection', array($info['dsn'], $info['user'], $info['password'], $info['options']))
 				->setAutowired($info['autowired'])
 				->addSetup('setCacheStorage')
 				->addSetup('Nette\Diagnostics\Debugger::getBlueScreen()->addPanel(?)', array(

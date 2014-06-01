@@ -72,8 +72,8 @@ Assert::exception(function() use ($book) {
 
 Assert::exception(function() use ($book) {
 	$book->ref('test');
-}, 'Flunorette\ReflectionException', 'No reference found for $book->test.');
+}, 'Flunorette\\Reflections\\ReflectionException', 'No reference found for $book->test.');
 
 Assert::exception(function() use ($book) {
 	$book->related('test');
-}, 'Flunorette\ReflectionException', 'No reference found for $book->related(test).');
+}, 'Flunorette\\Reflections\\ReflectionException', 'No reference found for $book->related(test).');

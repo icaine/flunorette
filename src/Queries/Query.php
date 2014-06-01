@@ -1,8 +1,16 @@
 <?php
 
-namespace Flunorette;
+namespace Flunorette\Queries;
 
 use DateTime;
+use Flunorette\Drivers\IDriver;
+use Flunorette\Exception;
+use Flunorette\Helpers;
+use Flunorette\InvalidArgumentException;
+use Flunorette\InvalidStateException;
+use Flunorette\IQueryObject;
+use Flunorette\Selections\Selection;
+use Flunorette\SqlLiteral;
 
 /**
  * Base query builder
@@ -172,8 +180,8 @@ abstract class Query implements IQueryObject {
 	}
 
 	/**
-	 * @param type $statement
-	 * @param type $parameters
+	 * @param mixed $statement
+	 * @param mixed $parameters
 	 * @return Query
 	 * @throws InvalidArgumentException
 	 */
@@ -252,7 +260,7 @@ abstract class Query implements IQueryObject {
 						}
 					}
 
-					if ($this->context->getDriver()->isSupported(Drivers\IDriver::SUPPORT_SUBSELECT)) {
+					if ($this->context->getDriver()->isSupported(IDriver::SUPPORT_SUBSELECT)) {
 						$arg = NULL;
 						$replace = $match[2][0] . '(' . $clone->getSql() . ')';
 						$this->context->parameters['WHERE'] = array_merge($this->context->parameters['WHERE'], $clone->getSqlBuilder()->getContext()->parameters['WHERE']);

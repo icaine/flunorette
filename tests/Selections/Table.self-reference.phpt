@@ -10,7 +10,7 @@
 require __DIR__ . '/connect.inc.php'; // create $connection
 
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . "/{$driverName}-nette_test1.sql");
-$connection->setDatabaseReflection($ref = new \Flunorette\DiscoveredReflection($connection));
+$connection->setDatabaseReflection($ref = new \Flunorette\Reflections\DiscoveredReflection($connection));
 
 global $driverName;
 switch ($driverName) {

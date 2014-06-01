@@ -1,15 +1,30 @@
 <?php
 
-namespace Flunorette;
+namespace Flunorette\Selections;
 
+use Flunorette\Connection;
 use Flunorette\Drivers\IDriver;
+use Flunorette\Hydrators\HydratorColumn;
+use Flunorette\Hydrators\HydratorField;
 use Flunorette\Hydrators\HydratorSelection;
+use Flunorette\InvalidArgumentException;
+use Flunorette\InvalidStateException;
+use Flunorette\IQueryObject;
+use Flunorette\IReflection;
+use Flunorette\Queries\DeleteQuery;
+use Flunorette\Queries\InsertQuery;
+use Flunorette\Queries\Query;
+use Flunorette\Queries\QueryContext;
+use Flunorette\Queries\SelectQuery;
+use Flunorette\Queries\UpdateQuery;
+use Flunorette\SqlLiteral;
+use Flunorette\Statement;
 use Nette\Object;
 use Nette\Utils\Arrays;
 
 class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess, \Countable {
 
-	/** @var HydratorSelectionDefault */
+	/** @var HydratorSelection */
 	static protected $hydrator;
 
 	/** @var QueryContext contains sql builders' data */
@@ -181,7 +196,7 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 	public function getSqlBuilder($type = 'select') {
 		$type = ucfirst(strtolower($type));
 		if (false == isset($this->sqlBuilders[$type])) {
-			$class = "Flunorette\\{$type}Query";
+			$class = "Flunorette\\Queries\\{$type}Query";
 			$this->sqlBuilders[$type] = new $class($this->context);
 		}
 		return $this->sqlBuilders[$type];
@@ -234,7 +249,7 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 	 * @return array
 	 */
 	public function fetchColumn($column = 0) {
-		return $this->hydrate(new Hydrators\HydratorColumn($column));
+		return $this->hydrate(new HydratorColumn($column));
 	}
 
 	/**
@@ -243,14 +258,14 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 	 * @return mixed
 	 */
 	public function fetchField($column) {
-		return $this->hydrate(new Hydrators\HydratorField($column));
+		return $this->hydrate(new HydratorField($column));
 	}
 
 	/**
 	 * Custom fetch mode
 	 * @param mixed $hydrator Any hydrator or callback(Statement)
 	 * @return mixed
-	 * @throws PDOException
+	 * @throws \PDOException
 	 * @see Statement::hydrate()
 	 */
 	public function hydrate($hydrator) {

@@ -2,7 +2,7 @@
 
 namespace Flunorette\Hydrators;
 
-use Flunorette\Selection;
+use Flunorette\Selections\Selection;
 use Flunorette\Statement;
 
 class HydratorSelection extends Hydrator {

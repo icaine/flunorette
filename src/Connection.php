@@ -3,6 +3,18 @@
 namespace Flunorette;
 
 use Flunorette\Drivers\IDriver;
+use Flunorette\Queries\DeleteQuery;
+use Flunorette\Queries\InsertQuery;
+use Flunorette\Queries\Query;
+use Flunorette\Queries\QueryContext;
+use Flunorette\Queries\SelectQuery;
+use Flunorette\Queries\UpdateQuery;
+use Flunorette\Reflections\DiscoveredReflection;
+use Flunorette\Reflections\IReflection;
+use Flunorette\Selections\ActiveRow;
+use Flunorette\Selections\ISelectionFactory;
+use Flunorette\Selections\Selection;
+use Flunorette\Selections\SelectionFactory;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
 use Nette\Object;
@@ -22,8 +34,6 @@ class Connection extends Object {
 		'transactionCounter' => true,
 		'delimiteMode' => SqlPreprocessor::DELIMITE_MODE_DEFAULT
 	);
-
-	public $rowClass = 'Flunorette\ActiveRow'; //TODO accept row factory callback
 
 	/** @var array */
 	protected $params;
@@ -180,7 +190,7 @@ class Connection extends Object {
 
 	public function __call($name, $args) {
 		if (preg_match('~^create(Select|Update|Delete|Insert)$~', $name, $m)) { #query object factory
-			$class = "Flunorette\\{$m[1]}Query";
+			$class = "Flunorette\\Queries\\{$m[1]}Query";
 			$queryContext = new QueryContext(reset($args), $this);
 			return new $class($queryContext);
 		}

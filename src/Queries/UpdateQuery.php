@@ -1,6 +1,9 @@
 <?php
 
-namespace Flunorette;
+namespace Flunorette\Queries;
+
+use Flunorette\InvalidArgumentException;
+use Flunorette\SqlLiteral;
 
 /**
  * UPDATE query builder

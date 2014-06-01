@@ -2,7 +2,7 @@
 
 //Select query
 
-use Flunorette\SelectQuery;
+use Flunorette\Queries\SelectQuery;
 use Flunorette\SqlLiteral;
 
 require __DIR__ . '/../connect.inc.php';

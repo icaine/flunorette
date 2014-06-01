@@ -13,9 +13,9 @@ What is Flunorette?
 - **uses the syntax from NDBT2.0** but takes faster code from NDBT2.1.
 
 *The main reason i decided to create Flunorette was that NDBT is superior for simple websites like blogs but with complex web apps you sooner or later hit the wall. E.g. as soon as you need create queries with conditions inside JOIN clauses or any other advance queries there is no way how to achieve it with NDBT*.
-  
-  
-  
+
+
+
 [1]: I literally gutted NDB(T) and took most of the code.
 [2]: Flunorette has a replacer that can help you with replacing NDB(T).
 
@@ -94,7 +94,7 @@ What is the difference between Flunorette and NDB(T)?
 
 - BC compatibility with NDBT
     - Whether to wrap conditions in `->where()` inside parentheses
-    
+
     - Whether to use `*` or `table.*` when no `->select()` is explicitly called.
 
 ###Example
@@ -106,7 +106,7 @@ What never can be achieved with NDBT:
     } else {
         $ratingJoin = array('ratings ON branches_categories.id = ratings.branch_category_id');
     }
-    
+
     $selection = $this->getBaseSelection()
         ->select('branches_categories.category_id AS category_id')
         ->select('criterion_ratings.criterion_id')
@@ -118,7 +118,7 @@ What never can be achieved with NDBT:
         ->leftJoin('criterion_ratings ON ratings.id = criterion_ratings.rating_id')
         ->group('branches.id')
     ;
-    
+
 More usage examples can be seen in [tests](https://github.com/icaine/Flunorette/tree/master/tests).
 
 ---
@@ -133,3 +133,38 @@ There are few things that i want to do before releasing Flunorette as `v1.0`.
 - Create a documentation.
 
 If you want to lend me a hand, just contact me on webdev.daso@gmail.com
+
+
+Change log
+----------
+
+**1.6.2014** - Classes moved to new namespaces (towards PSR-4):
+```php
+[
+	'Flunorette\\NetteDatabaseReplacer' => 'Flunorette\\Bridges\\Nette\\NetteDatabaseReplacer',
+	'Flunorette\\Hydrator' => 'Flunorette\\Hydrators\\Hydrator',
+	'Flunorette\\HydratorSelectionDefault' => 'Flunorette\\Hydrators\\HydratorSelection',
+	'Flunorette\\HydratorArrayHash' => 'Flunorette\\Hydrators\\HydratorArrayHash',
+	'Flunorette\\HydratorResult' => 'Flunorette\\Hydrators\\HydratorField',
+
+	'Flunorette\\ActiveRow' => 'Flunorette\\Selections\\ActiveRow',
+	'Flunorette\\Selection' => 'Flunorette\\Selections\\Selection',
+	'Flunorette\\GroupedSelection' => 'Flunorette\\Selections\\GroupedSelection',
+	'Flunorette\\ISelectionFactory' => 'Flunorette\\Selections\\ISelectionFactory',
+	'Flunorette\\SelectionFactory' => 'Flunorette\\Selections\\SelectionFactory',
+
+	'Flunorette\\DeleteQuery' => 'Flunorette\\Queries\\DeleteQuery',
+	'Flunorette\\InsertQuery' => 'Flunorette\\Queries\\InsertQuery',
+	'Flunorette\\JoinableQuery' => 'Flunorette\\Queries\\JoinableQuery',
+	'Flunorette\\Query' => 'Flunorette\\Queries\\Query',
+	'Flunorette\\QueryBuilder' => 'Flunorette\\Queries\\QueryBuilder',
+	'Flunorette\\QueryContext' => 'Flunorette\\Queries\\QueryContext',
+	'Flunorette\\SelectQuery' => 'Flunorette\\Queries\\SelectQuery',
+	'Flunorette\\UpdateQuery' => 'Flunorette\\Queries\\UpdateQuery',
+
+	'Flunorette\\IReflection' => 'Flunorette\\Reflections\\IReflection',
+	'Flunorette\\ConventionalReflection' => 'Flunorette\\Reflections\\ConventionalReflection',
+	'Flunorette\\DiscoveredReflection' => 'Flunorette\\Reflections\\DiscoveredReflection',
+	'Flunorette\\ReflectionException' => 'Flunorette\\Reflections\\ReflectionException',
+]
+```

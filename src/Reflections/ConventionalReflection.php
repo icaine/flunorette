@@ -1,6 +1,6 @@
 <?php
 
-namespace Flunorette;
+namespace Flunorette\Reflections;
 
 use Nette\Object;
 

@@ -14,10 +14,6 @@ class InvalidStateException extends Exception {
 
 }
 
-class ReflectionException extends Exception {
-
-}
-
 class UndeclaredColumnException extends InvalidStateException {
 
 }

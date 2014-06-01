@@ -40,12 +40,12 @@ Assert::same("SELECT * FROM article LEFT JOIN user AS approver ON approver.id = 
 //auto join missing relation (in this case wrong direction is used)
 $query = $connection->createSelect('user');
 $query->where('comment.id = 1');
-Assert::exception(array($query, 'getQuery'), 'Flunorette\\ReflectionException', 'No reference found for $user->comment but reverse $comment->user was found (wrong direction?)');
+Assert::exception(array($query, 'getQuery'), 'Flunorette\\Reflections\\ReflectionException', 'No reference found for $user->comment but reverse $comment->user was found (wrong direction?)');
 
 //auto join missing relation (in this case wrong direction is used)
 $query = $connection->createSelect('comment');
 $query->where('user:id = 1');
-Assert::exception(array($query, 'getQuery'), 'Flunorette\\ReflectionException', 'No reference found for $comment->related(user) but reverse one $user->related(comment) was found (wrong direction?).');
+Assert::exception(array($query, 'getQuery'), 'Flunorette\\Reflections\\ReflectionException', 'No reference found for $comment->related(user) but reverse one $user->related(comment) was found (wrong direction?).');
 
 //back ref auto joins
 $query = $connection->createSelect('user');

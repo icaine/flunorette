@@ -1,6 +1,8 @@
 <?php
 
-namespace Flunorette;
+namespace Flunorette\Selections;
+
+use Flunorette\Connection;
 
 class SelectionFactory implements ISelectionFactory {
 

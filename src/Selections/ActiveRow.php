@@ -1,8 +1,13 @@
 <?php
 
-namespace Flunorette;
+namespace Flunorette\Selections;
 
-class ActiveRow extends \Nette\Object implements \IteratorAggregate, \ArrayAccess, \Countable {
+use Flunorette\InvalidStateException;
+use Flunorette\Reflections\ReflectionException;
+use Flunorette\UndeclaredColumnException;
+use Nette\Object;
+
+class ActiveRow extends Object implements \IteratorAggregate, \ArrayAccess, \Countable {
 
 	/** @var Selection */
 	protected $selection;

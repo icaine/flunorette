@@ -13,7 +13,7 @@
 require __DIR__ . '/connect.inc.php'; // create $connection
 
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . "/{$driverName}-nette_test2.sql");
-$connection->setDatabaseReflection(new \Flunorette\DiscoveredReflection($connection));
+$connection->setDatabaseReflection(new \Flunorette\Reflections\DiscoveredReflection($connection));
 
 
 $titles = array();

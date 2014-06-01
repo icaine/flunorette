@@ -1,9 +1,9 @@
 <?php
 
-namespace Flunorette;
+namespace Flunorette\Reflections;
 
+use Flunorette\Connection;
 use Nette\Caching\Cache;
-use Nette\Caching\IStorage;
 use Nette\Object;
 
 class DiscoveredReflection extends Object implements IReflection {

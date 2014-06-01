@@ -1,6 +1,6 @@
 <?php
 
-namespace Flunorette;
+namespace Flunorette\Selections;
 
 use Nette\Utils\Arrays;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Flunorette;
+namespace Flunorette\Queries;
 
 /**
  * DELETE query builder

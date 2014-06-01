@@ -138,7 +138,7 @@ switch ($driverName) {
 }
 
 
-$reflection = new \Flunorette\DiscoveredReflection($connection);
+$reflection = new \Flunorette\Reflections\DiscoveredReflection($connection);
 
 $primary = $reflection->getPrimary('book_tag');
 Assert::same(array('book_id', 'tag_id'), $primary);

@@ -14,7 +14,7 @@ require __DIR__ . '/connect.inc.php'; // create $connection
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . "/{$driverName}-nette_test1.sql");
 $cacheStorage = new Nette\Caching\Storages\MemoryStorage;
 $connection->setCacheStorage($cacheStorage);
-$connection->setDatabaseReflection(new \Flunorette\DiscoveredReflection($connection));
+$connection->setDatabaseReflection(new \Flunorette\Reflections\DiscoveredReflection($connection));
 
 
 $book = $connection->table('book')->get(1);

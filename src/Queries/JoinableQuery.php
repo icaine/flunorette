@@ -1,7 +1,10 @@
 <?php
 
-namespace Flunorette;
+namespace Flunorette\Queries;
 
+use Flunorette\Helpers;
+use Flunorette\IQueryObject;
+use Flunorette\Reflections\ReflectionException;
 use Nette\Utils\Strings;
 
 /**

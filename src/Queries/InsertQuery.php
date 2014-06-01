@@ -1,7 +1,10 @@
 <?php
 
-namespace Flunorette;
+namespace Flunorette\Queries;
 
+use Flunorette\Exception;
+use Flunorette\InvalidArgumentException;
+use Flunorette\SqlLiteral;
 use Traversable;
 
 /**
@@ -36,7 +39,7 @@ class InsertQuery extends Query {
 	}
 
 	/** INSERT IGNORE - insert operation fails silently
-	 * @return \InsertQuery
+	 * @return InsertQuery
 	 */
 	public function ignore() {
 		$this->getContext()->ignore = true;
@@ -45,7 +48,7 @@ class InsertQuery extends Query {
 
 	/** Add ON DUPLICATE KEY UPDATE
 	 * @param array $values
-	 * @return \InsertQuery
+	 * @return InsertQuery
 	 */
 	public function onDuplicateKeyUpdate($values) {
 		$this->getContext(); //context must be available
@@ -58,7 +61,7 @@ class InsertQuery extends Query {
 	/**
 	 * Add VALUES
 	 * @param $values
-	 * @return \InsertQuery
+	 * @return InsertQuery
 	 * @throws Exception
 	 */
 	public function values($values) {

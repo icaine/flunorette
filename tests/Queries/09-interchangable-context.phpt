@@ -2,9 +2,9 @@
 
 //Interchangable context
 
-use Flunorette\SelectQuery;
-use Flunorette\DeleteQuery;
-use Flunorette\UpdateQuery;
+use Flunorette\Queries\SelectQuery;
+use Flunorette\Queries\DeleteQuery;
+use Flunorette\Queries\UpdateQuery;
 
 require __DIR__ . '/../connect.inc.php';
 

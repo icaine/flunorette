@@ -3,6 +3,7 @@
 namespace Flunorette;
 
 use Flunorette\Bridges\Nette\Diagnostics\ConnectionPanel;
+use Flunorette\Reflections\IReflection;
 use Nette\Diagnostics\Debugger;
 use Nette\Utils\Strings;
 

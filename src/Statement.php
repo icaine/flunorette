@@ -4,6 +4,9 @@ namespace Flunorette;
 
 use DateInterval;
 use Flunorette\Drivers\IDriver;
+use Flunorette\Hydrators\HydratorColumn;
+use Flunorette\Hydrators\HydratorField;
+use Flunorette\Reflections\IReflection;
 use Nette\DateTime;
 use Nette\ObjectMixin;
 use Nette\Reflection\ClassType;
@@ -90,7 +93,7 @@ class Statement extends PDOStatement {
 	 * @return mixed|FALSE
 	 */
 	public function fetchField($column = 0) {
-		return $this->hydrate(new Hydrators\HydratorField($column));
+		return $this->hydrate(new HydratorField($column));
 	}
 
 	/**
@@ -99,7 +102,7 @@ class Statement extends PDOStatement {
 	 * @return array
 	 */
 	public function fetchColumn($column = 0) {
-		return $this->hydrate(new Hydrators\HydratorColumn($column, true));
+		return $this->hydrate(new HydratorColumn($column, true));
 	}
 
 	/**
