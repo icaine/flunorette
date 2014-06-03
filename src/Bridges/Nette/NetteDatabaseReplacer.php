@@ -15,9 +15,9 @@ class NetteDatabaseReplacer {
 		class_alias('Flunorette\\Reflections\\ConventionalReflection', 'Nette\\Database\\Reflection\\ConventionalReflection', true);
 		class_alias('Flunorette\\Reflections\\DiscoveredReflection', 'Nette\\Database\\Reflection\\DiscoveredReflection', true);
 
-		class_alias('Flunorette\\Selection\\ActiveRow', 'Nette\\Database\\Table\\ActiveRow', true);
-		class_alias('Flunorette\\Selection\\Selection', 'Nette\\Database\\Table\\Selection', true);
-		class_alias('Flunorette\\Selection\\GroupedSelection', 'Nette\\Database\\Table\\GroupedSelection', true);
+		class_alias('Flunorette\\Selections\\ActiveRow', 'Nette\\Database\\Table\\ActiveRow', true);
+		class_alias('Flunorette\\Selections\\Selection', 'Nette\\Database\\Table\\Selection', true);
+		class_alias('Flunorette\\Selections\\GroupedSelection', 'Nette\\Database\\Table\\GroupedSelection', true);
 	}
 
 }

@@ -183,7 +183,8 @@ class ConnectionPanel extends Nette\Object implements Nette\Diagnostics\IBarPane
 			#nette-debug .nette-DbConnectionPanel-source { color: #BBB !important } </style>
 			<script type="text/javascript">
 				(function() {
-					var $ = Nette.Q ? Nette.Q.factory : Nette.Query.factory;
+					var FW = typeof Nette !== "undefined" ? Nette : Tracy;
+					var $ = typeof FW.Q !== "undefined" ? FW.Q.factory : FW.Query.factory;
 					$(".nette-DbConnectionPanel-type-switcher").bind("click", function(e) {
 						var name = this.name;
 						if (this.checked) {
