@@ -37,7 +37,7 @@ class HydratorColumn extends Hydrator {
 		$res = $statement->fetchAll(PDO::FETCH_COLUMN, $columnIndex);
 		if ($this->normalize) {
 			foreach ($res as $key => $value) {
-				$value = $statement->normalizeRow([$columnIndex => $value]);
+				$value = $statement->normalizeRow(array($columnIndex => $value));
 				$res[$key] = $value[$columnIndex];
 			}
 		}
