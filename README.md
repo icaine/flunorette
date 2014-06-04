@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/icaine/flunorette.svg?branch=v1.0)](https://travis-ci.org/icaine/flunorette)
+
 What is Flunorette?
 ===================
 **Flunorette**
