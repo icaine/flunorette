@@ -407,7 +407,11 @@ abstract class Query implements IQueryObject {
 	}
 
 	public function __toString() {
-		return $this->getQueryExpanded();
+		try {
+			return $this->getQueryExpanded();
+		} catch (\Exception $e) {
+			return __METHOD__ . ':' . $e->getMessage();
+		}
 	}
 
 	public function getHash() {

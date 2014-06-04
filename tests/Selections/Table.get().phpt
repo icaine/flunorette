@@ -1,16 +1,13 @@
 <?php
 
 /**
- * Test: Nette\Database\Table: Single row detail.
- *
- * @author     Jakub Vrana
- * @author     Jan Skrasek
- * @dataProvider? databases.ini
+ * Test: Flunorette\Selections: Single row detail.
+ * @dataProvider? ../databases.ini
 */
 
 
 
-require __DIR__ . '/connect.inc.php'; // create $connection
+require __DIR__ . '/../connect.inc.php'; // create $connection
 
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . "/{$driverName}-nette_test1.sql");
 

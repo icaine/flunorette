@@ -10,7 +10,10 @@ class HydratorColumn extends Hydrator {
 	/** @var mixed */
 	public $columnIndex = 0;
 
-	/** @var bool */
+	/**
+	 * Whether to normalize values (e.g. dates to DateTime objects)
+	 * @var bool
+	 */
 	public $normalize = true;
 
 	function __construct($columnIndex = 0, $normalize = true) {

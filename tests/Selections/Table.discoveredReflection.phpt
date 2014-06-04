@@ -1,16 +1,13 @@
 <?php
 
 /**
- * Test: Nette\Database\Table: Basic operations with DiscoveredReflection.
- *
- * @author     Jakub Vrana
- * @author     Jan Skrasek
- * @dataProvider? databases.ini
+ * Test: Flunorette\Selections: Basic operations with DiscoveredReflection.
+ * @dataProvider? ../databases.ini
 */
 
 
 
-require __DIR__ . '/connect.inc.php'; // create $connection
+require __DIR__ . '/../connect.inc.php'; // create $connection
 
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . "/{$driverName}-nette_test1.sql");
 $connection->setDatabaseReflection(new \Flunorette\Reflections\DiscoveredReflection($connection));

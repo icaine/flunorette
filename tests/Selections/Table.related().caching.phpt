@@ -1,15 +1,13 @@
 <?php
 
 /**
- * Test: Nette\Database\Table: Shared related data caching.
- *
- * @author     Jan Skrasek
- * @dataProvider? databases.ini
+ * Test: Flunorette\Selections: Shared related data caching.
+ * @dataProvider? ../databases.ini
 */
 
 
 
-require __DIR__ . '/connect.inc.php'; // create $connection
+require __DIR__ . '/../connect.inc.php'; // create $connection
 
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . "/{$driverName}-nette_test1.sql");
 

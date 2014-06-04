@@ -1,17 +1,29 @@
 {
-    "name": "vendor/flunorette",
-    "description": "Description of project Flunorette.",
-    "authors": [
-        {
-            "name": "Daniel Soukal",
-            "email": "webdev.daso@gmail.com"
-        }
-    ],
-    "require": {
-
-    },
-    "require-dev": {
-        "nette/tester": "~1.0.0",
-        "nette/nette": "~2.0.14"
-    }
+	"name": "icaine/flunorette",
+	"type": "library",
+	"description": "Database layer based on Nette/Database, FluendPdo and NotOrm.",
+	"support": {
+		"email": "webdev.daso@gmail.com",
+		"issues": "https://github.com/icaine/flunorette/issues"
+	},
+	"authors": [
+		{
+			"name": "Daniel Soukal",
+			"email": "webdev.daso@gmail.com"
+		}
+	],
+	"keywords": ["database", "mysql"],
+	"license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
+	"require": {
+		"nette/nette": "~2.0"
+	},
+	"require-dev": {
+		"nette/tester": "~1.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Flunorette\\": "src/"
+		},
+		"classmap": ["src/exceptions.php"]
+	}
 }

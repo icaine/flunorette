@@ -1,16 +1,13 @@
 <?php
 
 /**
- * Test: Nette\Database\Table: Basic operations with camelCase name conventions.
- *
- * @author     David Grudl
- * @author     Jan Skrasek
- * @dataProvider? databases.ini
+ * Test: Flunorette\Selections: Basic operations with camelCase name conventions.
+ * @dataProvider? ../databases.ini
 */
 
 
 
-require __DIR__ . '/connect.inc.php'; // create $connection
+require __DIR__ . '/../connect.inc.php'; // create $connection
 
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . "/{$driverName}-nette_test2.sql");
 $connection->setDatabaseReflection(new \Flunorette\Reflections\DiscoveredReflection($connection));

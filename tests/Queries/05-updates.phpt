@@ -1,10 +1,13 @@
 <?php
 
-//Update queries
-
+/**
+ * Test: Flunorette\Queries\UpdateQuery
+ * @dataProvider? ../databases.ini
+ */
 use Flunorette\SqlLiteral;
 
 require __DIR__ . '/../connect.inc.php';
+Flunorette\Helpers::loadFromFile($connection, __DIR__ . '/../flunorette_blog.sql');
 
 $birthday = new DateTime('1986-01-01');
 

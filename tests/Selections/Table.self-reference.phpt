@@ -1,13 +1,11 @@
 <?php
 
 /**
- * Test: Nette\Database\Table: DiscoveredReflection with self-reference.
- *
- * @author     Jan Skrasek
- * @dataProvider? databases.ini
+ * Test: Flunorette\Selections: DiscoveredReflection with self-reference.
+ * @dataProvider? ../databases.ini
 */
 
-require __DIR__ . '/connect.inc.php'; // create $connection
+require __DIR__ . '/../connect.inc.php'; // create $connection
 
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . "/{$driverName}-nette_test1.sql");
 $connection->setDatabaseReflection($ref = new \Flunorette\Reflections\DiscoveredReflection($connection));

@@ -1,15 +1,13 @@
 <?php
 
 /**
- * Test: Nette\Database\Table: Multi primary key support.
- *
- * @author     Jan Skrasek
- * @dataProvider? databases.ini
+ * Test: Flunorette\Selections: Multi primary key support.
+ * @dataProvider? ../databases.ini
 */
 
 
 
-require __DIR__ . '/connect.inc.php'; // create $connection
+require __DIR__ . '/../connect.inc.php'; // create $connection
 
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . "/{$driverName}-nette_test1.sql");
 $cacheStorage = new Nette\Caching\Storages\MemoryStorage;

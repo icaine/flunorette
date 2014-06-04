@@ -1,10 +1,17 @@
 <?php
 
-//Basic operations
-
+/**
+ * Test: Basic operations
+ * @dataProvider? databases.ini
+ */
 require __DIR__ . '/connect.inc.php';
+Flunorette\Helpers::loadFromFile($connection, __DIR__ . '/flunorette_blog.sql');
 /* @var $connection Flunorette\Connection */
 
+
+function pr($actual) {
+	return trim(print_r($actual, true));
+}
 
 $expected = <<<EXPECTED
 Flunorette\Row Object

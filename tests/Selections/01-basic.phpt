@@ -1,8 +1,11 @@
 <?php
 
-//Compatibility with Nette Database
-
+/**
+ * Test: Compatibility with Nette Database
+ * @dataProvider? ../databases.ini
+ */
 require __DIR__ . '/../connect.inc.php';
+Flunorette\Helpers::loadFromFile($connection, __DIR__ . '/../flunorette_blog.sql');
 
 function e($key, $value, $indent = 0) {
 	echo str_repeat("\t", $indent) . "$key: $value\n";
@@ -10,9 +13,9 @@ function e($key, $value, $indent = 0) {
 
 /* @var $connection Flunorette\Connection */
 
-//$ndb = new \Nette\Database\Connection('mysql:dbname=flunorette_blog;host=127.0.0.1', 'root', null);
-//$ndb->setDatabaseReflection(new \Nette\Database\Reflection\DiscoveredReflection($cacheStorage));
-//\Nette\Diagnostics\Debugger::$bar->addPanel($panel = new \Nette\Database\Diagnostics\ConnectionPanel());
+//$ndb = new \Flunorette\Connection('mysql:dbname=flunorette_blog;host=127.0.0.1', 'root', null);
+//$ndb->setDatabaseReflection(new \Flunorette\Reflection\DiscoveredReflection($cacheStorage));
+//\Nette\Diagnostics\Debugger::$bar->addPanel($panel = new \Flunorette\Diagnostics\ConnectionPanel());
 //$ndb->onQuery[] = array($panel, 'logQuery');
 //
 //$nsel = $ndb->table('user')->select('*')->order('id DESC');

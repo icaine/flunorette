@@ -1,8 +1,11 @@
 <?php
 
-//Inner queries
-
+/**
+ * Test: Flunorette\Queries\InsertQuery
+ * @dataProvider? ../databases.ini
+ */
 require __DIR__ . '/../connect.inc.php';
+Flunorette\Helpers::loadFromFile($connection, __DIR__ . '/../flunorette_blog.sql');
 
 //resolving inner query
 $inner = $connection->createSelect('user');

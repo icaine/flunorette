@@ -1,22 +1,20 @@
 <?php
 
 /**
- * Test: Nette\Database\Connection fetch methods.
- *
- * @author     David Grudl
- * @dataProvider? databases.ini
+ * Test: Flunorette\Connection fetch methods.
+ * @dataProvider? ../databases.ini
 */
 
 
 
-require __DIR__ . '/connect.inc.php'; // create $connection
+require __DIR__ . '/../connect.inc.php'; // create $connection
 
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . "/{$driverName}-nette_test1.sql");
 
 
 // fetch
 $row = $connection->fetch('SELECT name, id FROM author WHERE id = ?', 11);
-//Assert::type( 'Nette\Database\Row', $row );
+//Assert::type( 'Flunorette\Row', $row );
 Assert::same(array(
 	'name' => 'Jakub Vrana',
 	'id' => 11,
@@ -38,7 +36,7 @@ Assert::same(array(
 // fetchAll
 $arr = $connection->fetchAll('SELECT name, id FROM author WHERE id < ? ORDER BY id', 13);
 foreach ($arr as &$row) {
-	//Assert::type( 'Nette\Database\Row', $row );
+	//Assert::type( 'Flunorette\Row', $row );
 	$row = (array) $row;
 }
 Assert::equal(array(

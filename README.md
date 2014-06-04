@@ -138,33 +138,45 @@ If you want to lend me a hand, just contact me on webdev.daso@gmail.com
 Change log
 ----------
 
-**1.6.2014** - Classes moved to new namespaces (towards PSR-4):
+**1.6.2014** - Some classes moved to new namespaces (towards PSR-4). To migrate from 0.9 to 1.0 use:
 ```php
-[
-	'Flunorette\\NetteDatabaseReplacer' => 'Flunorette\\Bridges\\Nette\\NetteDatabaseReplacer',
-	'Flunorette\\Hydrator' => 'Flunorette\\Hydrators\\Hydrator',
-	'Flunorette\\HydratorSelectionDefault' => 'Flunorette\\Hydrators\\HydratorSelection',
-	'Flunorette\\HydratorArrayHash' => 'Flunorette\\Hydrators\\HydratorArrayHash',
-	'Flunorette\\HydratorResult' => 'Flunorette\\Hydrators\\HydratorField',
+	//BC part
 
-	'Flunorette\\ActiveRow' => 'Flunorette\\Selections\\ActiveRow',
-	'Flunorette\\Selection' => 'Flunorette\\Selections\\Selection',
-	'Flunorette\\GroupedSelection' => 'Flunorette\\Selections\\GroupedSelection',
-	'Flunorette\\ISelectionFactory' => 'Flunorette\\Selections\\ISelectionFactory',
-	'Flunorette\\SelectionFactory' => 'Flunorette\\Selections\\SelectionFactory',
+	//https://github.com/icaine/RenamedClassLoader
+	$rcLoader = new iCaine\RenamedClassLoader([
+		'Flunorette\\NetteDatabaseReplacer' => 'Flunorette\\Bridges\\Nette\\NetteDatabaseReplacer',
+		'Flunorette\\Hydrator' => 'Flunorette\\Hydrators\\Hydrator',
+		'Flunorette\\HydratorSelectionDefault' => 'Flunorette\\Hydrators\\HydratorSelection',
+		'Flunorette\\HydratorArrayHash' => 'Flunorette\\Hydrators\\HydratorArrayHash',
+		'Flunorette\\HydratorResult' => 'Flunorette\\Hydrators\\HydratorField',
 
-	'Flunorette\\DeleteQuery' => 'Flunorette\\Queries\\DeleteQuery',
-	'Flunorette\\InsertQuery' => 'Flunorette\\Queries\\InsertQuery',
-	'Flunorette\\JoinableQuery' => 'Flunorette\\Queries\\JoinableQuery',
-	'Flunorette\\Query' => 'Flunorette\\Queries\\Query',
-	'Flunorette\\QueryBuilder' => 'Flunorette\\Queries\\QueryBuilder',
-	'Flunorette\\QueryContext' => 'Flunorette\\Queries\\QueryContext',
-	'Flunorette\\SelectQuery' => 'Flunorette\\Queries\\SelectQuery',
-	'Flunorette\\UpdateQuery' => 'Flunorette\\Queries\\UpdateQuery',
+		'Flunorette\\ActiveRow' => 'Flunorette\\Selections\\ActiveRow',
+		'Flunorette\\Selection' => 'Flunorette\\Selections\\Selection',
+		'Flunorette\\GroupedSelection' => 'Flunorette\\Selections\\GroupedSelection',
+		'Flunorette\\ISelectionFactory' => 'Flunorette\\Selections\\ISelectionFactory',
+		'Flunorette\\SelectionFactory' => 'Flunorette\\Selections\\SelectionFactory',
 
-	'Flunorette\\IReflection' => 'Flunorette\\Reflections\\IReflection',
-	'Flunorette\\ConventionalReflection' => 'Flunorette\\Reflections\\ConventionalReflection',
-	'Flunorette\\DiscoveredReflection' => 'Flunorette\\Reflections\\DiscoveredReflection',
-	'Flunorette\\ReflectionException' => 'Flunorette\\Reflections\\ReflectionException',
-]
+		'Flunorette\\DeleteQuery' => 'Flunorette\\Queries\\DeleteQuery',
+		'Flunorette\\InsertQuery' => 'Flunorette\\Queries\\InsertQuery',
+		'Flunorette\\JoinableQuery' => 'Flunorette\\Queries\\JoinableQuery',
+		'Flunorette\\Query' => 'Flunorette\\Queries\\Query',
+		'Flunorette\\QueryBuilder' => 'Flunorette\\Queries\\QueryBuilder',
+		'Flunorette\\QueryContext' => 'Flunorette\\Queries\\QueryContext',
+		'Flunorette\\SelectQuery' => 'Flunorette\\Queries\\SelectQuery',
+		'Flunorette\\UpdateQuery' => 'Flunorette\\Queries\\UpdateQuery',
+
+		'Flunorette\\IReflection' => 'Flunorette\\Reflections\\IReflection',
+		'Flunorette\\ConventionalReflection' => 'Flunorette\\Reflections\\ConventionalReflection',
+		'Flunorette\\DiscoveredReflection' => 'Flunorette\\Reflections\\DiscoveredReflection',
+		'Flunorette\\ReflectionException' => 'Flunorette\\Reflections\\ReflectionException',
+
+	]);
+    $rcLoader->onClassLoaded[] = function ($old, $new) {
+        trigger_error($old, E_USER_DEPRECATED);
+    };
+    $rcLoader->register();
+
+	//If you are using the replacer
+	//Flunorette\NetteDatabaseReplacer::replace();
+	//end BC part
 ```

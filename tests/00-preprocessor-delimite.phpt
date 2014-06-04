@@ -1,12 +1,13 @@
 <?php
 
-//Preprocessor's delimiting
-
+/**
+ * Test: Flunorette\SqlPreprocessor::tryDelimite
+ * @dataProvider? databases.ini
+ */
 use Flunorette\SqlPreprocessor;
 
-include_once dirname(__FILE__) . '/connect.inc.php';
-
-/* @var $connection \Flunorette\Connection */
+include_once __DIR__ . '/connect.inc.php';
+/* @var $connection Flunorette\Connection */
 
 #replace test
 $preprocessor = new SqlPreprocessor($connection, SqlPreprocessor::DELIMITE_MODE_REPLACE);

@@ -1,15 +1,13 @@
 <?php
 
 /**
- * Test: Nette\Database\Connection: reflection for MySQL
- *
- * @author     David Grudl
- * @dataProvider? databases.ini
+ * Test: Flunorette\Connection: reflection for MySQL
+ * @dataProvider? ../databases.ini
 */
 
 
 
-require __DIR__ . '/connect.inc.php'; // create $connection
+require __DIR__ . '/../connect.inc.php'; // create $connection
 
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . "/{$driverName}-nette_test1.sql");
 

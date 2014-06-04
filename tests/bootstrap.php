@@ -1,113 +1,29 @@
 <?php
 
-use Flunorette\Bridges\Nette\Diagnostics\ConnectionPanel;
-use Nette\Caching\Storages\FileStorage;
-use Nette\Diagnostics\Debugger;
-use Nette\Diagnostics\IBarPanel;
-use Nette\Loaders\RobotLoader;
-use Nette\Utils\Finder;
-
 define('EOL', "\n");
-error_reporting(E_ALL | E_STRICT);
-
-require_once __DIR__ . '/../Vendor/autoload.php';
 
 date_default_timezone_set('Europe/Prague');
+iconv_set_encoding('internal_encoding', 'UTF-8');
+extension_loaded('mbstring') && mb_internal_encoding('UTF-8');
+umask(0007);
 
-Debugger::$strictMode = TRUE;
-Debugger::enable(Debugger::DEVELOPMENT);
+if (@!include __DIR__ . '/../vendor/autoload.php') {
+	echo 'Install dependencies using `composer update --dev`';
+	exit(1);
+}
 
-$loader = new RobotLoader();
-$loader->setCacheStorage(new FileStorage(__DIR__ . '/../temp/cache'));
-$loader->addDirectory(__DIR__ . '/../src');
-$loader->addDirectory(__DIR__ . '/../vendor/nette');
-$loader->register();
-
-class_alias('Tester\Assert', 'Assert');
 Tester\Environment::setup();
 Tester\Dumper::$maxLength = 10e3;
 
-function vd($param, $title = null) {
-	echo "<pre><b>$title</b>\n";
-	Debugger::dump($param);
-	echo '</pre>';
-	return $param;
-}
+// create temporary directory
+define('TEMP_DIR', __DIR__ . '/temp/' . getmypid());
+@mkdir(dirname(TEMP_DIR)); // @ - directory may already exist
+Tester\Helpers::purge(TEMP_DIR);
 
-function d($param, $title = null) {
-	static $c = array();
-
-	Debugger::barDump($param, ($title ? : '- ') . '[' . @ ++$c[$title] . '] (' . strtoupper(gettype($param)) . ')');
-	return $param;
-}
-
-function p($param) {
-	print_r($param);
-	echo "\n";
-}
-
-function pr($actual) {
-	return trim(print_r($actual, true));
-}
-
-function t($name = null) {
-	return Debugger::timer($name);
-}
-
-function et($name = null) {
-	vd((t($name) * 1000) . ' ms', $name);
-}
-
-function cleanCache() {
-	$files = array();
-	foreach (Finder::findFiles('*')->from(__DIR__ . '/temp') as $filename => $fileInfo) { //clean cache
-		$files[] = $filename;
-	}
-	foreach ($files as $f) {
-		unlink($f);
-	}
-
-	$dirs = array();
-	foreach (Finder::findDirectories('*')->from(__DIR__ . '/temp') as $filename => $fileInfo) { //clean cache
-		$dirs[] = $filename;
-	}
-	foreach ($dirs as $d) {
-		rmdir($d);
-	}
-}
+class_alias('Tester\Assert', 'Assert');
 
 function test($closure) {
 	$closure();
 }
 
-
-if (php_sapi_name() != 'cli') {
-//	header('Content-Type: text/plain');
-	$testNumber = @$_GET['n'];
-	/**
-	 * Causes output in browsers to appear as text/plain without messing with debugger or output itself
-	 */
-	class FakeStyle implements IBarPanel {
-
-		public function getPanel() {
-			return '';
-		}
-
-		public function getTab() {
-			$str = "<style> * { white-space: pre; font-family: Monospace } </style>";
-			$str .= "<style> #nette-debug * { white-space: normal; } </style>";
-			$str .= "<style> #nette-debug pre, #nette-debug code { white-space: pre; } </style>";
-			return '<span>FakeStyle</span>' . $str;
-		}
-
-	}
-
-
-
-	Debugger::$bar->addPanel($panel = new ConnectionPanel());
-	Debugger::$bar->addPanel(new FakeStyle);
-}
-
-
-
-$driverName = '';
+include_once __DIR__ . '/browser-dev.php';

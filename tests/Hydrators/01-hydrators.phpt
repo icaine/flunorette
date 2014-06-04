@@ -1,7 +1,9 @@
 <?php
 
-//Hydrators
-
+/**
+ * Test: Flunorette\Hydrators
+ * @dataProvider? ../databases.ini
+ */
 use Flunorette\Connection;
 use Flunorette\Hydrators\HydratorArrayHash;
 use Flunorette\Hydrators\HydratorColumn;
@@ -11,6 +13,8 @@ use Nette\ArrayHash;
 use Nette\DateTime;
 
 require __DIR__ . '/../connect.inc.php';
+Flunorette\Helpers::loadFromFile($connection, __DIR__ . '/../flunorette_blog.sql');
+
 /* @var $connection Connection */
 
 //test hydrator callback

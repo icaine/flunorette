@@ -1,15 +1,13 @@
 <?php
 
 /**
- * Test: Nette\Database\Statement::normalizeRow()
- *
- * @author     David Grudl
- * @dataProvider? databases.ini  mysql
+ * Test: Flunorette\Statement::normalizeRow()
+ * @dataProvider? ../databases.ini  mysql
 */
 
 
 
-require __DIR__ . '/connect.inc.php'; // create $connection
+require __DIR__ . '/../connect.inc.php'; // create $connection
 
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . '/mysql-nette_test3.sql');
 

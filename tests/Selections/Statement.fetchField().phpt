@@ -1,15 +1,13 @@
 <?php
 
 /**
- * Test: Nette\Database\Statement: Fetch field.
- *
- * @author     David Grudl
- * @dataProvider? databases.ini
+ * Test: Flunorette\Statement: Fetch field.
+ * @dataProvider? ../databases.ini
 */
 
 
 
-require __DIR__ . '/connect.inc.php'; // create $connection
+require __DIR__ . '/../connect.inc.php'; // create $connection
 
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . "/{$driverName}-nette_test1.sql");
 

@@ -165,6 +165,10 @@ class Helpers {
 			throw new \Exception("Cannot open file '$file'.");
 		}
 
+		//save listeners
+		$listeners = $connection->onQuery;
+		$connection->onQuery = array();
+
 		$count = 0;
 		$sql = '';
 		while (!feof($handle)) {
@@ -180,6 +184,10 @@ class Helpers {
 			$connection->query($sql);
 			$count++;
 		}
+
+		//reload listeners
+		$connection->onQuery = $listeners;
+
 		fclose($handle);
 		return $count;
 	}

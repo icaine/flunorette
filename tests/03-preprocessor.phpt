@@ -1,7 +1,9 @@
 <?php
 
-//Preprocessor
-
+/**
+ * Test: Preprocessor
+ * @dataProvider? databases.ini
+ */
 use Flunorette\SqlPreprocessor;
 use Flunorette\SqlLiteral;
 

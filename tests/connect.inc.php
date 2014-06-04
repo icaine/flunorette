@@ -1,33 +1,37 @@
 <?php
 
 use Flunorette\Connection;
-use Flunorette\Helpers;
-use Nette\Caching\Cache;
-use Nette\Caching\Storages\FileStorage;
 
 require_once __DIR__ . '/bootstrap.php';
 
-$connection = new Connection('mysql:dbname=flunorette_blog;host=127.0.0.1', 'root', null, array('delimiteMode' => 0));
-$connection->setCacheStorage($cacheStorage = new FileStorage(__DIR__ . '/temp'));
-$connection->getCache()->clean(array(Cache::ALL => true));
+try {
+	$options = Tester\Environment::loadData() + array('user' => NULL, 'password' => NULL);
+} catch (Exception $e) {
+	Tester\Environment::skip($e->getMessage());
+}
 
-Helpers::loadFromFile($connection, __DIR__ . '/flunorette_blog.sql');
+if (strpos($options['dsn'], 'sqlite::memory:') === FALSE) {
+	Tester\Environment::lock($options['dsn'], dirname(TEMP_DIR));
+}
+
+try {
+	$connection = new Connection($options['dsn'], $options['user'], $options['password'], array('delimiteMode' => 0));
+	$connection->setCacheStorage($cacheStorage = new Nette\Caching\Storages\FileStorage(TEMP_DIR));
+} catch (PDOException $e) {
+	Tester\Environment::skip("Connection to '$options[dsn]' failed. Reason: " . $e->getMessage());
+}
+
 
 global $panel;
-
 if (isset($panel)) {
 	$connection->onQuery[] = function ($statement, $params = null) use ($panel) {
 		$panel->logQuery($statement, $params);
 	};
 }
 
-
-global $driverName;
 $driverName = $connection->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME);
 
-
 if (!function_exists('reformat')) {
-
 	function reformat($s) {
 		global $driverName;
 		if (is_array($s)) {
@@ -46,6 +50,4 @@ if (!function_exists('reformat')) {
 			trigger_error("Unsupported driver $driverName", E_USER_WARNING);
 		}
 	}
-
 }
-

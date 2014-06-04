@@ -1,10 +1,13 @@
 <?php
 
-//Expanding queries
-
+/**
+ * Test: Flunorette\Queries - Expanding queries
+ * @dataProvider? ../databases.ini
+ */
 use Flunorette\SqlLiteral;
 
 require __DIR__ . '/../connect.inc.php';
+Flunorette\Helpers::loadFromFile($connection, __DIR__ . '/../flunorette_blog.sql');
 
 $query = $connection->createSelect('user');
 $query->select('user.*')->where('id', array(1, 2));

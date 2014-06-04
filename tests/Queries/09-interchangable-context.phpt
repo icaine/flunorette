@@ -1,13 +1,15 @@
 <?php
 
-//Interchangable context
-
+/**
+ * Test: Flunorette\Queries - Interchangable context
+ * @dataProvider? ../databases.ini
+ */
 use Flunorette\Queries\SelectQuery;
 use Flunorette\Queries\DeleteQuery;
 use Flunorette\Queries\UpdateQuery;
 
 require __DIR__ . '/../connect.inc.php';
-
+Flunorette\Helpers::loadFromFile($connection, __DIR__ . '/../flunorette_blog.sql');
 /* @var $connection Flunorette\Connection */
 
 $query = $connection->createSelect('user');

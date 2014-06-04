@@ -1,7 +1,9 @@
 <?php
 
-//Literals in queries
-
+/**
+ * Test: Flunorette\Queries - Literals in queries
+ * @dataProvider? ../databases.ini
+ */
 use Flunorette\SqlLiteral;
 
 require __DIR__ . '/../connect.inc.php';

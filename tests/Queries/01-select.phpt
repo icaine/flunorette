@@ -1,11 +1,14 @@
 <?php
 
-//Select query
-
+/**
+ * Test: Flunorette\Queries\SelectQuery
+ * @dataProvider? ../databases.ini
+ */
 use Flunorette\Queries\SelectQuery;
 use Flunorette\SqlLiteral;
 
 require __DIR__ . '/../connect.inc.php';
+Flunorette\Helpers::loadFromFile($connection, __DIR__ . '/../flunorette_blog.sql');
 
 /* @var $connection Flunorette\Connection */
 

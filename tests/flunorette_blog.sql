@@ -5,6 +5,10 @@ SET foreign_key_checks = 0;
 SET time_zone = '+01:00';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+DROP DATABASE IF EXISTS flunorette_blog;
+CREATE DATABASE IF NOT EXISTS flunorette_blog;
+USE flunorette_blog;
+
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
