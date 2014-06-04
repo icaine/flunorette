@@ -160,6 +160,23 @@ class MySqlDriver implements IDriver {
 		$count = $statement->columnCount();
 		for ($col = 0; $col < $count; $col++) {
 			$meta = $statement->getColumnMeta($col);
+
+			if (PHP_VERSION_ID < 50417) { // PHP bug #48724
+				switch ($meta['name']) {
+					case 'tinyint':
+						$meta['native_type'] = 'TINY';
+						break;
+					case 'bit':
+						$meta['native_type'] = 'BIT';
+						break;
+					case 'year':
+						$meta['native_type'] = 'YEAR';
+						break;
+					default:
+						break;
+				}
+			}
+
 			if (isset($meta['native_type'])) {
 				$types[$meta['name']] = $type = Helpers::detectType($meta['native_type']);
 				if ($type === IReflection::FIELD_TIME) {
