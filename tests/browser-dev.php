@@ -9,7 +9,7 @@ use Nette\Diagnostics\IBarPanel;
 
 
 
-if (php_sapi_name() != 'cli') {
+if (isset($_SERVER['REMOTE_ADDR'])) {
 
 	/**
 	 * Causes output in browsers to appear as text/plain
