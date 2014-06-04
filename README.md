@@ -6,20 +6,19 @@ What is Flunorette?
 
 - is a **database layer** simplifying work with tables, relations and CRUD operations.
 
-- is currently in **beta** but still runs without any known problems on few bigger projects (e.g. daty.cz, uzmipopust.rs, wrate.it).
-
 - is based on **[Nette Database](http://doc.nette.org/en/2.0/database) ([Table](http://doc.nette.org/en/2.0/database-table))** - NDB(T) and uses modified **[FluentPDO](http://fluentpdo.com)** as SQL builder.
 
 - is derived[1] directly from NDB(T)2.0 thus it's like on 95% compatible with it[2].
 
-- **uses the syntax from NDBT2.0** but takes faster code from NDBT2.1.
+- **uses the same syntax/API as NDBT2.0** but takes faster code from NDBT2.1.
 
 *The main reason i decided to create Flunorette was that NDBT is superior for simple websites like blogs but with complex web apps you sooner or later hit the wall. E.g. as soon as you need create queries with conditions inside JOIN clauses or any other advance queries there is no way how to achieve it with NDBT*.
 
 
 
 [1]: I literally gutted NDB(T) and took most of the code.
-[2]: Flunorette has a replacer that can help you with replacing NDB(T).
+
+[2]: Flunorette has a replacer that can help you with replacing NDB(T)2.0.
 
 ---
 
@@ -130,11 +129,11 @@ There are few things that i want to do before releasing Flunorette as `v1.0`.
 
 **Namely:**
 
-- Clean the code (decide whether to be dependent on Nette or not, move some classes to appropriate namespaces).
-- Improve/clean tests.
+- ~~Clean the code (decide whether to be dependent on Nette or not, move some classes to appropriate namespaces).~~
+- ~~Improve/clean tests.~~
 - Create a documentation.
 
-If you want to lend me a hand, just contact me on webdev.daso@gmail.com
+If you want to lend me a hand just contact me on webdev.daso@gmail.com
 
 
 Change log
