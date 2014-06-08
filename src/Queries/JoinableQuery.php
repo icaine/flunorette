@@ -105,27 +105,29 @@ abstract class JoinableQuery extends Query {
 			#replace keys with table names
 			$direction = substr($join, -1);
 			if (in_array($direction, array('.', ':'))) {
-				$reflection = $this->getContext()->getDatabaseReflection();
 				$key = substr($join, 0, -1);
-				if (false == $reflection->hasTable($key)) {
-					try {
-						if ('.' == $direction) {
-							list($table, ) = $reflection->getBelongsToReference($this->getTable(), $key);
-						} else {
-							list($table, ) = $reflection->getHasManyReference($this->getTable(), $key);
-						}
-
-						if ($key != $table) {
-							if ($table == $this->getTable()) {
-								$joinAlias = ($direction == '.' ? $table : "$table:") . " AS $key";
-								$table = $key;
+				if ($this->getTableAlias() != $key || $direction !== '.') { //not necessary to look for FK when it is the same table as defined in FROM
+					$reflection = $this->getContext()->getDatabaseReflection();
+					if (false == $reflection->hasTable($key)) {
+						try {
+							if ('.' == $direction) {
+								list($table, ) = $reflection->getBelongsToReference($this->getTable(), $key);
+							} else {
+								list($table, ) = $reflection->getHasManyReference($this->getTable(), $key);
 							}
 
-							$statement = preg_replace('~\\b' . preg_quote($join, '~') . '~', $table . $direction, $statement, 1);
-							$join = (isset($joinAlias) ? $joinAlias : $table . $direction);
-						}
-					} catch (ReflectionException $exc) {
+							if ($key != $table) {
+								if ($table == $this->getTable()) {
+									$joinAlias = ($direction == '.' ? $table : "$table:") . " AS $key";
+									$table = $key;
+								}
 
+								$statement = preg_replace('~\\b' . preg_quote($join, '~') . '~', $table . $direction, $statement, 1);
+								$join = (isset($joinAlias) ? $joinAlias : $table . $direction);
+							}
+						} catch (ReflectionException $exc) {
+
+						}
 					}
 				}
 			}
