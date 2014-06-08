@@ -11,18 +11,32 @@ require __DIR__ . '/../connect.inc.php'; // create $connection
 
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . "/../files/{$driverName}-nette_test1.sql");
 
+//Sub Selection
+test(function () use ($connection) {
+	$apps = array();
+	$selection = $connection->table('author')->where('name LIKE ?', '%David%'); // authors with name David
+	foreach ($connection->table('book')->where('author_id', $selection) as $book) {
+		$apps[] = $book->title;
+	}
 
-$apps = array();
-$unknownBorn = $connection->table('author')->where('born', null); // authors with unknown date of born
+	Assert::same(array(
+		'Nette',
+		'Dibi'
+	), $apps);
+});
 
-$connection->table('book')->where('author_id', $unknownBorn)->getSql();
-foreach ($connection->table('book')->where('author_id', $unknownBorn) as $book) { // their books: SELECT `id` FROM `author` WHERE (`born` IS NULL), SELECT * FROM `book` WHERE (`author_id` IN (11, 12))
-	$apps[] = $book->title;
-}
 
-Assert::same(array(
-	'1001 tipu a triku pro PHP',
-	'JUSH',
-	'Nette',
-	'Dibi',
-), $apps);
+//Sub SelectionQuery
+test(function () use ($connection) {
+	$apps = array();
+	$subselection = $connection->createSelect('author')->where('id', array(12, 13))->select('id');
+	foreach ($connection->table('book')->where('author_id IN (?)', $subselection)->select('title') as $book) {
+		$apps[] = $book->title;
+	}
+
+	Assert::same(array(
+		'Nette',
+		'Dibi',
+	), $apps);
+});
+
