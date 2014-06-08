@@ -6,6 +6,7 @@ use DateInterval;
 use Flunorette\Drivers\IDriver;
 use Flunorette\Hydrators\HydratorColumn;
 use Flunorette\Hydrators\HydratorField;
+use Flunorette\Hydrators\HydratorPairs;
 use Flunorette\Reflections\IReflection;
 use Nette\DateTime;
 use Nette\ObjectMixin;
@@ -84,7 +85,7 @@ class Statement extends PDOStatement {
 	 * @return array
 	 */
 	public function fetchPairs() {
-		return $this->fetchAll(PDO::FETCH_KEY_PAIR); // since PHP 5.2.3
+		return $this->hydrate(new HydratorPairs());
 	}
 
 	/**
