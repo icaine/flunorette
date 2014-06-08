@@ -31,9 +31,6 @@ class QueryContext extends Object {
 	/** @var array */
 	public $parameters = array();
 
-	/** @var bool */
-	public $ndbtCompatibility = true; //TODO when composition is used [todo:1] use some overlay class instead (e.g. NdbtCommonQuery)
-
 	/** @var array of used tables (also include table from clause FROM) */
 	public $joins = array();
 
@@ -104,7 +101,7 @@ class QueryContext extends Object {
 	}
 
 	public function __sleep() {
-		return array('table', 'tableAlias', 'statements', 'parameters', 'joins', 'ndbtCompatibility', 'isSmartJoinEnabled');
+		return array('table', 'tableAlias', 'statements', 'parameters', 'joins', 'isSmartJoinEnabled');
 	}
 
 }

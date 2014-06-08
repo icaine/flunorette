@@ -28,10 +28,7 @@ abstract class JoinableQuery extends Query {
 
 	protected function addStatement($clause, $statement, array $parameters = array()) {
 		if ('WHERE' === $clause) {
-			if ($this->context->ndbtCompatibility) {
-				$statement = "($statement)";
-			}
-			$statement = "AND $statement";
+			$statement = "AND ($statement)";
 		} elseif ('WHERE AND' === $clause) {
 			$clause = 'WHERE';
 			$statement = "AND $statement";

@@ -18,8 +18,8 @@ $cloned = SelectQuery::fromQuery($query, true);
 $cloned->order('name');
 $notcloned = SelectQuery::fromQuery($query);
 $notcloned->order('id');
-Assert::same('SELECT * FROM user WHERE (id = ?) ORDER BY id', $query->getQuery());
-Assert::same('SELECT * FROM user WHERE (id = ?) ORDER BY name', $cloned->getQuery());
+Assert::same('SELECT user.* FROM user WHERE (id = ?) ORDER BY id', $query->getQuery());
+Assert::same('SELECT user.* FROM user WHERE (id = ?) ORDER BY name', $cloned->getQuery());
 Assert::same($query->getQuery(), $notcloned->getQuery());
 
 
