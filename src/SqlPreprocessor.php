@@ -135,7 +135,7 @@ class SqlPreprocessor {
 			reset($value);
 			if (isset($value[0])) { // non-associative; value, value, value
 				foreach ($value as $v) {
-					if (is_array($v) && isset($v[0])) { // no-associative; (value), (value), (value)
+					if (is_array($v) && isset($v[0]) && count($v) > 1) { // no-associative; (value), (value), (value)
 						$vx[] = '(' . $this->formatValue($v) . ')';
 					} else {
 						$vx[] = $this->formatValue($v);
