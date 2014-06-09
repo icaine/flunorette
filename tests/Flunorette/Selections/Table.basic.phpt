@@ -74,3 +74,11 @@ Assert::exception(function() use ($book) {
 Assert::exception(function() use ($book) {
 	$book->related('test');
 }, 'Flunorette\\Reflections\\ReflectionException', 'No reference found for $book->related(test).');
+
+
+
+//array with shifted offset as arg
+$query = $connection->table('author');
+$query->whereAnd('id', 1)->whereOr('id', 2);
+Assert::same('SELECT author.* FROM author WHERE id = ? OR id = ?', $query->getQuery());
+Assert::same(array(1, 2), $query->getParameters());

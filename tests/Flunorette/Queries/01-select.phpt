@@ -164,3 +164,10 @@ $query->where('id', array(5 => 1, 6 => 2));
 Assert::same('SELECT user.* FROM user WHERE (id IN (?))', $query->getQuery());
 Assert::same('SELECT user.* FROM user WHERE (id IN (1, 2))', $query->getQueryExpanded());
 Assert::same(array(array(1, 2)), $query->getParameters());
+
+//array with shifted offset as arg
+$query = $connection->createSelect('user');
+$query->whereAnd('id', 1)->whereOr('id', 2);
+Assert::same('SELECT user.* FROM user WHERE id = ? OR id = ?', $query->getQuery());
+Assert::same('SELECT user.* FROM user WHERE id = 1 OR id = 2', $query->getQueryExpanded());
+Assert::same(array(1, 2), $query->getParameters());
