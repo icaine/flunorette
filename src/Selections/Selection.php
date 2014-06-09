@@ -361,7 +361,7 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 	}
 
 	/**
-	 * Adds where condition, more calls appends with AND.
+	 * Adds where condition enclosed in colons "(id = 1)", more calls appends with AND.
 	 * @param  string condition possibly containing ?
 	 * @param  mixed
 	 * @param  mixed ...
@@ -369,6 +369,30 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 	 */
 	public function where($condition, $parameters = array()) {
 		$this->callSqlBuilder('where', func_get_args());
+		return $this;
+	}
+
+	/**
+	 * Adds where condition, more calls appends with AND without enclosing inside colons.
+	 * @param  string condition possibly containing ?
+	 * @param  mixed
+	 * @param  mixed ...
+	 * @return self
+	 */
+	public function whereAnd($condition, $parameters = array()) {
+		$this->callSqlBuilder('whereAnd', func_get_args());
+		return $this;
+	}
+
+	/**
+	 * Adds where condition, more calls appends with OR without enclosing inside colons.
+	 * @param  string condition possibly containing ?
+	 * @param  mixed
+	 * @param  mixed ...
+	 * @return self
+	 */
+	public function whereOr($condition, $parameters = array()) {
+		$this->callSqlBuilder('whereOr', func_get_args());
 		return $this;
 	}
 

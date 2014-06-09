@@ -48,7 +48,7 @@ class SelectQuery extends JoinableQuery {
 	protected function buildQuery() {
 		$this->init();
 		if (empty($this->context->statements['SELECT'])) {
-			$this->context->statements['SELECT'][] = $this->context->ndbtCompatibility ? '*' : $this->getTableAlias() . '.*';
+			$this->context->statements['SELECT'][] = $this->getTableAlias() . '.*';
 		}
 		return parent::buildQuery();
 	}

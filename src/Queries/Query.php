@@ -267,7 +267,7 @@ abstract class Query implements IQueryObject {
 					} else {
 						$arg = array();
 						foreach ($clone as $row) {
-							$arg[] = array_values(iterator_to_array($row));
+							$arg[] = array_values($row->toArray());
 						}
 					}
 				}
