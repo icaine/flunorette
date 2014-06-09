@@ -2,6 +2,7 @@
 
 namespace Flunorette\Bridges\Nette;
 
+use Flunorette\SqlPreprocessor;
 use Nette\DI\Compiler;
 use Nette\DI\CompilerExtension;
 use Nette\DI\ContainerBuilder;
@@ -13,13 +14,15 @@ class FlunoretteExtension extends CompilerExtension {
 		'dsn' => null,
 		'user' => null,
 		'password' => null,
-		'options' => null,
+		'options' => array(),
 		'debugger' => true,
 		'explain' => true,
 		'reflection' => 'Flunorette\\Reflections\\DiscoveredReflection',
 		'autowired' => null,
+		'transactionCounter' => true,
+		'delimiteMode' => SqlPreprocessor::DELIMITE_MODE_DEFAULT,
 		'lazy' => true,
-		'transactionCounter' => true
+		'driverClass' => null
 	);
 
 	public function loadConfiguration() {
@@ -43,6 +46,12 @@ class FlunoretteExtension extends CompilerExtension {
 			$info += array('autowired' => $autowired) + $this->databaseDefaults;
 			$autowired = false;
 
+			foreach (array('transactionCounter', 'delimiteMode', 'lazy', 'driverClass') as $option) {
+				if (isset($info[$option])) {
+					$info['options'][$option] = $info[$option];
+				}
+			}
+
 			foreach ((array) $info['options'] as $key => $value) {
 				if (preg_match('#^PDO::\w+\z#', $key)) {
 					unset($info['options'][$key]);
@@ -53,7 +62,9 @@ class FlunoretteExtension extends CompilerExtension {
 			if (!$info['reflection']) {
 				$reflection = null;
 			} elseif (is_string($info['reflection'])) {
-				$reflection = new Statement(preg_match('#^[a-z]+\z#', $info['reflection']) ? 'Flunorette\\Reflections\\' . ucfirst($info['reflection']) . 'Reflection' : $info['reflection'], strtolower($info['reflection']) === 'discovered' ? array('@self') : array());
+				$reflection = new Statement(preg_match('#^[a-z]+\z#', $info['reflection']) ?
+					'Flunorette\\Reflections\\' . ucfirst($info['reflection']) . 'Reflection' :
+					$info['reflection'], strtolower($info['reflection']) === 'discovered' ? array('@self') : array());
 			} else {
 				$tmp = Compiler::filterArguments(array($info['reflection']));
 				$reflection = reset($tmp);
