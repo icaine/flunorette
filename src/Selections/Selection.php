@@ -257,7 +257,7 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 	 * @param mixed $column index or key
 	 * @return mixed
 	 */
-	public function fetchField($column) {
+	public function fetchField($column = 0) {
 		return $this->hydrate(new HydratorField($column));
 	}
 
