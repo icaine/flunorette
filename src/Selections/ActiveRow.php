@@ -113,7 +113,7 @@ class ActiveRow extends Object implements \IteratorAggregate, \ArrayAccess, \Cou
 	 * Returns referenced row.
 	 * @param  string
 	 * @param  string
-	 * @return IRow or NULL if the row does not exist
+	 * @return ActiveRow or NULL if the row does not exist
 	 */
 	public function ref($key, $throughColumn = NULL) {
 		if (!$throughColumn) {
