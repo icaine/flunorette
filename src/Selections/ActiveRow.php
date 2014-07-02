@@ -168,7 +168,7 @@ class ActiveRow extends Object implements \IteratorAggregate, \ArrayAccess, \Cou
 		}
 
 		if ($res === false) {
-			trigger_error('Data could not be save: unknown reason', E_USER_WARNING);
+			trigger_error('Data could not be saved: unknown reason', E_USER_WARNING);
 		} else {
 			$res = true;
 		}
