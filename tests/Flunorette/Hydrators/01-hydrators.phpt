@@ -17,6 +17,11 @@ require __DIR__ . '/../connect.inc.php';
 Flunorette\Helpers::loadFromFile($connection, __DIR__ . '/../files/flunorette_blog.sql');
 
 /* @var $connection Connection */
+//test hydrator fetch field no result
+test(function () use ($connection) {
+	$actual = $connection->hydrate(new HydratorField('title'), 'SELECT title FROM article WHERE id = 0');
+	Assert::equal(false, $actual);
+});
 
 //test hydrator callback
 test(function () use ($connection) {
@@ -60,27 +65,39 @@ test(function () use ($connection) {
 
 
 
+//test hydrator fetch array hash normalized
+test(function () use ($connection) {
+	$actual = $connection->hydrate(new HydratorArrayHash(), 'SELECT id, published_at FROM article LIMIT 1');
+	Assert::equal(array(ArrayHash::from(array('id' => 1, 'published_at' => \Nette\Utils\DateTime::from('2011-12-10 12:10:00')))), $actual);
+});
+
 //test hydrator fetch array hash
 test(function () use ($connection) {
-	$actual = $connection->hydrate(new HydratorArrayHash(false), 'SELECT id, name FROM user');
-	Assert::equal(ArrayHash::from(array('id' => 1, 'name' => 'Dan')), $actual);
+	$actual = $connection->hydrate(new HydratorArrayHash(false), 'SELECT id, published_at FROM article LIMIT 1');
+	Assert::equal(array(ArrayHash::from(array('id' => "1", 'published_at' => '2011-12-10 12:10:00'))), $actual);
+});
+
+//test hydrator fetch array hash - zero results
+test(function () use ($connection) {
+	$actual = $connection->hydrate(new HydratorArrayHash(false), 'SELECT id, published_at FROM article LIMIT 0');
+	Assert::equal(array(), $actual);
 });
 
 
 
-//test hydrator fetch result normalized
+//test hydrator fetch field normalized
 test(function () use ($connection) {
 	$actual = $connection->hydrate(new HydratorField, 'SELECT MAX(published_at) FROM article');
 	Assert::equal(new DateTime('2014-02-01 18:30:00'), $actual);
 });
 
-//test hydrator fetch result
+//test hydrator fetch field
 test(function () use ($connection) {
 	$actual = $connection->hydrate(new HydratorField(0, false), 'SELECT MAX(published_at) FROM article');
 	Assert::equal('2014-02-01 18:30:00', $actual);
 });
 
-//test hydrator fetch result via key
+//test hydrator fetch field via key
 test(function () use ($connection) {
 	$actual = $connection->hydrate(new HydratorField('title', false), 'SELECT title FROM article');
 	Assert::equal('article 1', $actual);

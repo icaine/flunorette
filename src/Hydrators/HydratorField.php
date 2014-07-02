@@ -20,7 +20,7 @@ class HydratorField extends Hydrator {
 
 	public function hydrate(Statement $statement) {
 		$res = $statement->fetch(PDO::FETCH_BOTH);
-		if ($this->normalize) {
+		if ($res !== false && $this->normalize) {
 			$value = $statement->normalizeRow(array($this->columnIndex => $res[$this->columnIndex]));
 			$res = $value;
 		}
