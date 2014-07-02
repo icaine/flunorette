@@ -151,8 +151,12 @@ class ActiveRow extends Object implements \IteratorAggregate, \ArrayAccess, \Cou
 	public function save($data = null) {
 		$hasPrimary = $this->getPrimary(false);
 		if ($hasPrimary) {
+			if (0 == $this->selection->createSelectionInstance()->wherePrimary($hasPrimary)->limit(1)->count('*')) {
+				goto INSERT_ROW;
+			}
 			$res = $this->update($data);
 		} else {
+			INSERT_ROW:
 			if ($data === null) {
 				$data = $this->modified;
 			}
