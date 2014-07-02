@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/icaine/flunorette.svg?branch=master)](https://travis-ci.org/icaine/flunorette) &nbsp; ![Downloads Total](http://img.shields.io/packagist/dt/icaine/flunorette.svg) &nbsp; ![Latest Version](http://img.shields.io/packagist/v/icaine/flunorette.svg) 
+[![Build Status](https://travis-ci.org/icaine/flunorette.svg?tag=1.0.2)](https://travis-ci.org/icaine/flunorette) &nbsp; ![Downloads Total](http://img.shields.io/packagist/dt/icaine/flunorette.svg) &nbsp; ![Latest Version](http://img.shields.io/packagist/v/icaine/flunorette.svg)
 
 What is Flunorette?
 ===================

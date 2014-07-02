@@ -671,7 +671,6 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 		}
 
 		$row = $this->createSelectionInstance()
-			->select('*')
 			->wherePrimary($primaryKey)
 			->fetch();
 
@@ -710,8 +709,8 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 		$builder->set($data);
 
 		return $this->connection->queryArgs(
-				$builder->getQuery(), $builder->getParameters()
-			)->getRowCount();
+			$builder->getQuery(), $builder->getParameters()
+		)->getRowCount();
 	}
 
 	/**
