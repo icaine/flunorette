@@ -20,6 +20,11 @@ What is Flunorette?
 
 ---
 
+Download
+--------
+Via composer `composer require icaine/flunorette '~1.0'` or via [github](https://github.com/icaine/flunorette/releases).
+
+
 Documentation
 -----------------------------------------------------
 
