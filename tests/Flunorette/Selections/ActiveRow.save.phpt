@@ -21,6 +21,7 @@ $book = $connection->table('book');
 
 $book1 = $book->get(1);  // SELECT * FROM `book` WHERE (`id` = ?)
 Assert::same('Jakub Vrana', $book1->author->name);  // SELECT * FROM `author` WHERE (`author`.`id` IN (11))
+
 //insert
 $newAuthor = $connection->table('author')->createRow();
 $newAuthor->name = 'Bill';
@@ -28,6 +29,12 @@ $newAuthor->web = 'http://web.com';
 Assert::true($newAuthor->save());
 Assert::equal(1, $connection->table('author')->where('name', 'Bill')->count('*'));
 
+//insert 2
+$newAuthor = $connection->table('author')->createRow([
+	'name' =>  'Jacob'
+]);
+Assert::true($newAuthor->save());
+Assert::equal(1, $connection->table('author')->where('name', 'Jacob')->count('*'));
 
 //table with multiple non autoincrement keys
 $newBookTag = $connection->table('book_tag')->createRow();

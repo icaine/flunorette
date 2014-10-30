@@ -158,7 +158,7 @@ class ActiveRow extends Object implements \IteratorAggregate, \ArrayAccess, \Cou
 		} else {
 			INSERT_ROW:
 			if ($data === null) {
-				$data = $this->modified;
+				$data = $this->modified + $this->data;
 			}
 			$res = $this->selection->insert($data);
 			if ($res instanceof ActiveRow) {
