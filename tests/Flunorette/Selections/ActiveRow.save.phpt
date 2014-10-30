@@ -30,9 +30,9 @@ Assert::true($newAuthor->save());
 Assert::equal(1, $connection->table('author')->where('name', 'Bill')->count('*'));
 
 //insert 2
-$newAuthor = $connection->table('author')->createRow([
+$newAuthor = $connection->table('author')->createRow(array(
 	'name' =>  'Jacob'
-]);
+));
 Assert::true($newAuthor->save());
 Assert::equal(1, $connection->table('author')->where('name', 'Jacob')->count('*'));
 
