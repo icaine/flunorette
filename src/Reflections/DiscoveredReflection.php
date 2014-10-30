@@ -28,8 +28,9 @@ class DiscoveredReflection extends Object implements IReflection {
 	 */
 	public function __construct(Connection $connection) {
 		$this->connection = $connection;
-		$this->cache = $this->connection->getCache()->derive('DiscoveredReflection');
-		if ($this->cache) {
+		$cache = $this->connection->getCache();
+		if ($cache) {
+			$this->cache = $cache->derive('DiscoveredReflection');
 			$this->structure = $this->loadedStructure = $this->cache->load('structure') ? : array();
 		}
 
