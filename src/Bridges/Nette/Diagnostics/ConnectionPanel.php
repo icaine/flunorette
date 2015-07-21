@@ -183,15 +183,18 @@ class ConnectionPanel extends Nette\Object implements Nette\Diagnostics\IBarPane
 			#nette-debug .nette-DbConnectionPanel-source { color: #BBB !important } </style>
 			<script type="text/javascript">
 				(function() {
-					var FW = typeof Tracy !== "undefined" ? Tracy : Nette;
-					var $ = typeof FW.Q !== "undefined" ? FW.Q.factory : FW.Query.factory;
-					$(".nette-DbConnectionPanel-type-switcher").bind("click", function(e) {
-						var name = this.name;
-						if (this.checked) {
-							$(".nette-DbConnectionPanel-type-" + name).show();
-						} else {
-							$(".nette-DbConnectionPanel-type-" + name).hide();
-						}
+					[].forEach.call(document.querySelectorAll(".nette-DbConnectionPanel-type-switcher"), function(a) {
+						a.addEventListener("click", function(e) {
+							var name = this.name;
+							var checked = this.checked;
+							[].forEach.call(document.querySelectorAll(".nette-DbConnectionPanel-type-" + name), function(a) {
+								if (checked) {
+									a.style.display = "table-row";
+								} else {
+									a.style.display = "none";
+								}
+							});
+						});
 					});
 				})();
 			</script>
