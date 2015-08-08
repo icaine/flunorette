@@ -766,7 +766,7 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 	 * @return GroupedSelection
 	 */
 	public function getReferencingTable($table, $column, $active = NULL) {
-		$prototype = & $this->refCache['referencingPrototype']["$table.$column"];
+		$prototype = & $this->refCache['referencingPrototype'][$this->getSpecificCacheKey()]["$table.$column"];
 		if (!$prototype) {
 			$prototype = $this->createGroupedSelectionInstance($table, $column);
 			$prototype->where("$table.$column", array_keys((array) $this->rows));
