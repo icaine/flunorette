@@ -10,7 +10,7 @@ use Flunorette\Hydrators\HydratorSelection;
 use Flunorette\InvalidArgumentException;
 use Flunorette\InvalidStateException;
 use Flunorette\IQueryObject;
-use Flunorette\IReflection;
+use Flunorette\Reflections\IReflection;
 use Flunorette\Queries\DeleteQuery;
 use Flunorette\Queries\InsertQuery;
 use Flunorette\Queries\Query;
@@ -735,7 +735,7 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 		$referenced = & $this->refCache['referenced'][$this->getSpecificCacheKey()]["$table.$column"];
 		$selection = & $referenced['selection'];
 		$cacheKeys = & $referenced['cacheKeys'];
-		if ($selection === NULL || !isset($cacheKeys[$checkPrimaryKey])) {
+		if ($selection === NULL || ($checkPrimaryKey !== NULL && !isset($cacheKeys[$checkPrimaryKey]))) {
 			$this->execute();
 			$cacheKeys = array();
 			foreach ($this->rows as $row) {
