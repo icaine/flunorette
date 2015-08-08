@@ -582,6 +582,7 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 		$this->specificCacheKey = null;
 		$this->generalCacheKey = null;
 		$this->refCache['referencingPrototype'] = array();
+		$this->refCache['referenced'] = array();
 	}
 
 	/**
