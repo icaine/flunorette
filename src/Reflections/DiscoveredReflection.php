@@ -24,7 +24,8 @@ class DiscoveredReflection extends Object implements IReflection {
 	private $testReverse = true;
 
 	/**
-	 * Create autodiscovery structure.
+	 * Creates autodiscovery structure.
+	 * @param Connection $connection
 	 */
 	public function __construct(Connection $connection) {
 		$this->connection = $connection;
@@ -51,7 +52,7 @@ class DiscoveredReflection extends Object implements IReflection {
 			return empty($primary) ? NULL : $primary;
 		}
 
-		$columns = $this->connection->getSupplementalDriver()->getColumns($table);
+		$columns = $this->connection->getDriver()->getColumns($table);
 		$primary = array();
 		foreach ($columns as $column) {
 			if ($column['primary']) {
@@ -175,7 +176,7 @@ class DiscoveredReflection extends Object implements IReflection {
 		$this->structure['foreignKeys'] = array();
 		$this->structure['tables'] = array();
 
-		foreach ($this->connection->getSupplementalDriver()->getTables() as $table) {
+		foreach ($this->connection->getDriver()->getTables() as $table) {
 			$this->structure['tables'][$table['name']] = true;
 			if ($table['view'] == FALSE) {
 				$this->reloadForeignKeys($table['name']);
@@ -190,7 +191,7 @@ class DiscoveredReflection extends Object implements IReflection {
 	}
 
 	protected function reloadForeignKeys($table) {
-		foreach ($this->connection->getSupplementalDriver()->getForeignKeys($table) as $row) {
+		foreach ($this->connection->getDriver()->getForeignKeys($table) as $row) {
 			$this->structure['belongsTo'][strtolower($table)][$row['column']] = $row['ref_table'];
 			$this->structure['hasMany'][strtolower($row['ref_table'])][$row['column'] . $table] = array($row['column'], $table);
 			$this->structure['foreignKeys'][$table][$row['ref_table']] = array($row['ref_table'], $row['column']);
