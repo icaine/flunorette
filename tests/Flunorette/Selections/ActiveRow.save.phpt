@@ -63,10 +63,10 @@ test(function () use ($connection) { // ref/related after save
 	Assert::equal('SELECT book.* FROM book WHERE (book.author_id IN (16))', $author->related('book')->getSqlBuilder()->getQueryExpanded());
 	Assert::false($author->related('book')->fetch());
 
-	$book = $author->related('book')->createRow([
+	$book = $author->related('book')->createRow(array(
 		'author_id' => 16,
 		'title'     => 'example title'
-	]);
+	));
 	$book->save();
 
 	Assert::equal('example author', $book->author->name);
