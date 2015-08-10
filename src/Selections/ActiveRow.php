@@ -163,6 +163,7 @@ class ActiveRow extends Object implements \IteratorAggregate, \ArrayAccess, \Cou
 			$res = $this->selection->insert($data);
 			if ($res instanceof ActiveRow) {
 				$this->data = $res->toArray();
+				$this->selection->addRow($this);
 			}
 			$this->modified = array();
 		}

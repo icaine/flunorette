@@ -676,16 +676,25 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 			->fetch();
 
 		if ($this->rows !== NULL) {
-			if ($signature = $row->getSignature(false)) {
-				$this->rows[$signature] = $row;
-				$this->data[$signature] = $row;
-			} else {
-				$this->rows[] = $row;
-				$this->data[] = $row;
-			}
+			$this->addRow($row);
 		}
 
 		return $row;
+	}
+
+	/**
+	 * @internal
+	 * @ignore
+	 * @param ActiveRow $row
+	 */
+	public function addRow(ActiveRow $row) {
+		if ($signature = $row->getSignature(false)) {
+			$this->rows[$signature] = $row;
+			$this->data[$signature] = $row;
+		} else {
+			$this->rows[] = $row;
+			$this->data[] = $row;
+		}
 	}
 
 	/**
