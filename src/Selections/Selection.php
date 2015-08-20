@@ -24,9 +24,6 @@ use Nette\Utils\Arrays;
 
 class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess, \Countable {
 
-	/** @var HydratorSelection */
-	static protected $hydrator;
-
 	/** @var QueryContext contains sql builders' data */
 	protected $context;
 
@@ -548,10 +545,8 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 			throw $exception;
 		}
 
-		if (null === self::$hydrator) {
-			self::$hydrator = new HydratorSelection();
-		}
-		$this->data = $this->rows = self::$hydrator->setSelection($this)->hydrate($result);
+		$hydrator = new HydratorSelection($this);
+		$this->data = $this->rows = $hydrator->hydrate($result);
 
 		$first = reset($this->rows);
 		if ($first && $result->columnCount() != count($first)) {
