@@ -3,8 +3,14 @@
 namespace Flunorette\Drivers;
 
 use Flunorette\Connection;
+use Flunorette\ConnectionException;
+use Flunorette\DriverException;
+use Flunorette\ForeignKeyConstraintViolationException;
 use Flunorette\Helpers;
+use Flunorette\NotNullConstraintViolationException;
 use Flunorette\Reflections\IReflection;
+use Flunorette\UniqueConstraintViolationException;
+use PDOException;
 use PDOStatement;
 
 class MySqlDriver implements IDriver {
@@ -19,6 +25,8 @@ class MySqlDriver implements IDriver {
 	private $connection;
 
 	/**
+	 * @param Connection $connection
+	 * @param array $options
 	 * Driver options:
 	 *   - charset => character encoding to set (default is utf8)
 	 *   - sqlmode => see http://dev.mysql.com/doc/refman/5.0/en/server-sql-mode.html
@@ -31,6 +39,25 @@ class MySqlDriver implements IDriver {
 		}
 		if (isset($options['sqlmode'])) {
 			$connection->query("SET sql_mode='$options[sqlmode]'");
+		}
+	}
+
+	/**
+	 * @param PDOException $e
+	 * @return DriverException
+	 */
+	public function convertException(PDOException $e) {
+		$code = isset($e->errorInfo[1]) ? $e->errorInfo[1] : null;
+		if (in_array($code, array(1216, 1217, 1451, 1452, 1701), true)) {
+			return ForeignKeyConstraintViolationException::from($e);
+		} elseif (in_array($code, array(1062, 1557, 1569, 1586), true)) {
+			return UniqueConstraintViolationException::from($e);
+		} elseif ($code >= 2001 && $code <= 2028) {
+			return ConnectionException::from($e);
+		} elseif (in_array($code, array(1048, 1121, 1138, 1171, 1252, 1263, 1566), true)) {
+			return NotNullConstraintViolationException::from($e);
+		} else {
+			return DriverException::from($e);
 		}
 	}
 

@@ -92,10 +92,14 @@ class Connection extends Object {
 
 	protected function connect() {
 		if (null === $this->pdo) {
-			$pdo = new PDO($this->params[0], $this->params[1], $this->params[2], $this->options);
-			$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('Flunorette\Statement', array($this)));
+			try {
+				$pdo = new PDO($this->params[0], $this->params[1], $this->params[2], $this->options);
+				$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('Flunorette\Statement', array($this)));
+			} catch (\PDOException $e) {
+				throw ConnectionException::from($e);
+			}
 			$this->pdo = $pdo;
 
 			if (!empty($this->options['transactionCounter'])) {
@@ -348,19 +352,31 @@ class Connection extends Object {
 	/** @return bool */
 	public function beginTransaction() {
 		$this->onQuery($this->getPdo()->prepare('TRANSACTION BEGIN'));
-		return $this->transactionCounter ? $this->transactionCounter->beginTransaction() : $this->getPdo()->beginTransaction();
+		try {
+			return $this->transactionCounter ? $this->transactionCounter->beginTransaction() : $this->getPdo()->beginTransaction();
+		} catch (\PDOException $e) {
+			throw $this->driver->convertException($e);
+		}
 	}
 
 	/** @return bool */
 	public function commit() {
 		$this->onQuery($this->getPdo()->prepare('TRANSACTION COMMIT'));
-		return $this->transactionCounter ? $this->transactionCounter->commit() : $this->getPdo()->commit();
+		try {
+			return $this->transactionCounter ? $this->transactionCounter->commit() : $this->getPdo()->commit();
+		} catch (\PDOException $e) {
+			throw $this->driver->convertException($e);
+		}
 	}
 
 	/** @return bool */
 	public function rollBack() {
 		$this->onQuery($this->getPdo()->prepare('TRANSACTION ROLLBACK'));
-		return $this->transactionCounter ? $this->transactionCounter->rollBack() : $this->getPdo()->rollBack();
+		try {
+			return $this->transactionCounter ? $this->transactionCounter->rollBack() : $this->getPdo()->rollBack();
+		} catch (\PDOException $e) {
+			throw $this->driver->convertException($e);
+		}
 	}
 
 	//======================= BC =======================//

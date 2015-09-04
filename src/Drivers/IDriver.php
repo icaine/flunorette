@@ -2,6 +2,8 @@
 
 namespace Flunorette\Drivers;
 
+use Flunorette\DriverException;
+use PDOException;
 use PDOStatement;
 
 interface IDriver {
@@ -11,6 +13,12 @@ interface IDriver {
 		SUPPORT_MULTI_INSERT_AS_SELECT = 'insert_as_select',
 		SUPPORT_MULTI_COLUMN_AS_OR_COND = 'multi_column_as_or',
 		SUPPORT_SUBSELECT = 'subselect';
+
+	/**
+	 * @param PDOException $e
+	 * @return DriverException
+	 */
+	function convertException(PDOException $e);
 
 	/**
 	 * Delimites identifier for use in a SQL statement.

@@ -37,8 +37,9 @@ class Statement extends PDOStatement {
 
 	/**
 	 * Executes statement.
-	 * @param  array
-	 * @return self
+	 * @param array $params
+	 * @return Statement
+	 * @throws DriverException
 	 */
 	public function execute($params = array()) {
 		static $types = array(
@@ -57,6 +58,7 @@ class Statement extends PDOStatement {
 		try {
 			parent::execute();
 		} catch (PDOException $e) {
+			$e = $this->driver->convertException($e);
 			$e->queryString = $this->queryString;
 			$this->connection->onError($this, $params, $e);
 			throw $e;
