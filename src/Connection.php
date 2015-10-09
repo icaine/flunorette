@@ -379,6 +379,27 @@ class Connection extends Object {
 		}
 	}
 
+	/**
+	 * @param callable $callable
+	 * @param array $callableArgs
+	 * @return mixed
+	 * @throws \Exception
+	 */
+	public function doInTransaction($callable, array $callableArgs = array()) {
+		$this->beginTransaction();
+		try {
+			if (!is_callable($callable)) {
+				throw new InvalidArgumentException('First parameter is not callable!');
+			}
+			$result = call_user_func_array($callable, $callableArgs);
+			$this->commit();
+			return $result;
+		} catch (\Exception $e) {
+			$this->rollBack();
+			throw $e;
+		}
+	}
+
 	//======================= BC =======================//
 
 	/**

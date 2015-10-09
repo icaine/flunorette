@@ -4,6 +4,8 @@
  * Test: Transactions
  * @dataProvider? databases.ini
  */
+use Flunorette\Connection;
+
 require __DIR__ . '/connect.inc.php';
 
 
@@ -57,4 +59,43 @@ test(function() use ($connection) {
 	$connection->commit();
 
 	Assert::false($connection->fetchField('SELECT id FROM book WHERE id = ?', 3));
+});
+
+
+test(function() use ($connection) {
+	$book = array(
+		'title' => 'Winterfell',
+		'author_id' => 11,
+	);
+
+	Assert::exception(function () use ($connection, $book) {
+		$result = $connection->doInTransaction(function (Connection $connection, $book) {
+			$connection->exec('INSERT INTO book', $book);
+			throw new \Exception();
+		}, array($connection, $book));
+	}, 'Exception');
+
+	Assert::same(0, $connection->fetchField('SELECT COUNT(*) FROM book'));
+});
+
+
+test(function() use ($connection) {
+	$book = array(
+		'title' => 'Winterfell',
+		'author_id' => 11,
+	);
+
+	$result = $connection->doInTransaction(function (Connection $connection, $book) {
+		return $connection->exec('INSERT INTO book', $book);
+	}, array($connection, $book));
+
+	Assert::same(1, $result);
+	Assert::same(1, $connection->fetchField('SELECT COUNT(*) FROM book'));
+});
+
+
+test(function() use ($connection) {
+	Assert::exception(function () use ($connection) {
+		$connection->doInTransaction('unknownFunctionThatIsNotCallable');
+	}, 'Flunorette\InvalidArgumentException', 'First parameter is not callable!');
 });
