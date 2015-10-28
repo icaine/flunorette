@@ -99,6 +99,10 @@ class GroupedSelection extends Selection {
 
 	//======================= internal =======================//
 
+	protected function emptyResultSet($deleteReferencedCache = true) {
+		parent::emptyResultSet(false);
+	}
+
 	protected function execute() {
 		if ($this->rows !== NULL) {
 			return;

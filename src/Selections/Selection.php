@@ -572,12 +572,14 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 		return $this->connection->queryArgs($query, $this->getSqlBuilder($type)->getParameters());
 	}
 
-	protected function emptyResultSet() {
+	protected function emptyResultSet($deleteReferencedCache = true) {
 		$this->rows = null;
 		$this->specificCacheKey = null;
 		$this->generalCacheKey = null;
 		$this->refCache['referencingPrototype'] = array();
-		$this->refCache['referenced'] = array();
+		if ($deleteReferencedCache) {
+			$this->refCache['referenced'] = array();
+		}
 	}
 
 	/**
