@@ -4,6 +4,7 @@ namespace Flunorette\Selections;
 
 use Flunorette\Connection;
 use Flunorette\Drivers\IDriver;
+use Flunorette\Helpers;
 use Flunorette\Hydrators\HydratorColumn;
 use Flunorette\Hydrators\HydratorField;
 use Flunorette\Hydrators\HydratorSelection;
@@ -95,7 +96,7 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 	}
 
 	public function getHash() {
-		return md5(serialize(array($this->getQuery(), $this->getParameters())));
+		return Helpers::hashParams(array($this->getQuery(), $this->getParameters()));
 	}
 
 	public function unfreeze() {
@@ -608,7 +609,7 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 		}
 
 		$builder = $this->getSqlBuilder();
-		return $this->generalCacheKey = md5(serialize(array(__CLASS__, $this->getName(), $builder->getClause('WHERE'))));
+		return $this->generalCacheKey = Helpers::hashParams(array(__CLASS__, $this->getName(), $builder->getClause('WHERE')));
 	}
 
 	/**
@@ -620,9 +621,7 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 		if ($this->specificCacheKey) {
 			return $this->specificCacheKey;
 		}
-
-		$builder = $this->getSqlBuilder();
-		return $this->specificCacheKey = md5($builder->getQuery() . serialize($builder->getParameters()));
+		return $this->specificCacheKey = $this->getHash();
 	}
 
 	//======================= manipulation =======================//

@@ -2,6 +2,7 @@
 
 namespace Flunorette\Selections;
 
+use Flunorette\Helpers;
 use Nette\Utils\Arrays;
 
 class GroupedSelection extends Selection {
@@ -64,7 +65,7 @@ class GroupedSelection extends Selection {
 	//======================= aggregations =======================//
 
 	public function aggregation($function) {
-		$aggregation = & $this->getRefTable($refPath)->aggregation[$refPath . $function . $this->getSql() . serialize($this->getParameters())];
+		$aggregation = & $this->getRefTable($refPath)->aggregation[$refPath . $function . $this->getSql() . Helpers::hashParams($this->getParameters())];
 
 		if ($aggregation === NULL) {
 			$aggregation = array();

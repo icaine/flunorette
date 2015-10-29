@@ -27,7 +27,7 @@ class SqlLiteral implements IQueryObject {
 	}
 
 	public function getHash() {
-		return md5(serialize($this));
+		return md5(serialize(array($this->value, Helpers::hashParams($this->parameters))));
 	}
 
 	/**

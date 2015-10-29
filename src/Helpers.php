@@ -4,6 +4,7 @@ namespace Flunorette;
 
 use Flunorette\Bridges\Nette\Diagnostics\ConnectionPanel;
 use Flunorette\Reflections\IReflection;
+use Flunorette\Selections\ActiveRow;
 use Nette\Diagnostics\Debugger;
 use Nette\Utils\Strings;
 
@@ -263,6 +264,20 @@ class Helpers {
 	/** @return bool when array key begins with ':' */
 	static public function containsNamedParams(&$array) {
 		return is_array($array) && is_string(key($array)) && Strings::startsWith(key($array), ':');
+	}
+
+	/** @return string */
+	static public function hashParams(array $params) {
+		foreach ($params as $key => $param) {
+			if (is_array($param)) {
+				$params[$key] = self::hashParams($param);
+			} elseif ($param instanceof IQueryObject) {
+				$params[$key] = $param->getHash();
+			} elseif ($param instanceof ActiveRow) {
+				$params[$key] = $param->getPrimary();
+			}
+		}
+		return md5(serialize($params));
 	}
 
 }
