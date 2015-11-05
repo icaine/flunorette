@@ -228,6 +228,15 @@ class ActiveRow extends Object implements \IteratorAggregate, \ArrayAccess, \Cou
 		return count($this->data);
 	}
 
+	/**
+	 * Returns whether row contains column even if its value is null.
+	 * @param $column
+	 * @return bool
+	 */
+	public function hasColumn($column) {
+		return array_key_exists($column, $this->data);
+	}
+
 	//======================= interface IteratorAggregate =======================//
 
 	public function getIterator() {
