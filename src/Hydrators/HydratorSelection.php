@@ -5,6 +5,9 @@ namespace Flunorette\Hydrators;
 use Flunorette\Selections\Selection;
 use Flunorette\Statement;
 
+/**
+ * @internal
+ */
 class HydratorSelection extends Hydrator {
 
 	/** @var Selection */

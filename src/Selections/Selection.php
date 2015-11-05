@@ -5,19 +5,17 @@ namespace Flunorette\Selections;
 use Flunorette\Connection;
 use Flunorette\Drivers\IDriver;
 use Flunorette\Helpers;
-use Flunorette\Hydrators\HydratorColumn;
-use Flunorette\Hydrators\HydratorField;
 use Flunorette\Hydrators\HydratorSelection;
 use Flunorette\InvalidArgumentException;
 use Flunorette\InvalidStateException;
 use Flunorette\IQueryObject;
-use Flunorette\Reflections\IReflection;
 use Flunorette\Queries\DeleteQuery;
 use Flunorette\Queries\InsertQuery;
 use Flunorette\Queries\Query;
 use Flunorette\Queries\QueryContext;
 use Flunorette\Queries\SelectQuery;
 use Flunorette\Queries\UpdateQuery;
+use Flunorette\Reflections\IReflection;
 use Flunorette\SqlLiteral;
 use Flunorette\Statement;
 use Nette\Object;
@@ -247,7 +245,21 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 	 * @return array
 	 */
 	public function fetchColumn($column = 0) {
-		return $this->hydrate(new HydratorColumn($column));
+		$return = array();
+		$_column = null;
+		foreach ($this as $row) {
+			if ($_column === null) {
+				$_column = $column;
+				if (!$row->hasColumn($column)) {
+					$keys = array_keys($row->toArray());
+					if (isset($keys[$column])) {
+						$_column = $keys[$column];
+					}
+				}
+			}
+			$return[] = $row[$_column];
+		}
+		return $return;
 	}
 
 	/**
@@ -256,11 +268,34 @@ class Selection extends Object implements IQueryObject, \Iterator, \ArrayAccess,
 	 * @return mixed
 	 */
 	public function fetchField($column = 0) {
-		return $this->hydrate(new HydratorField($column));
+		$row = $this->fetch();
+		if ($row) {
+			if (!$row->hasColumn($column)) {
+				$keys = array_keys($row->toArray());
+				if (isset($keys[$column])) {
+					$column = $keys[$column];
+				}
+			}
+			return $row[$column];
+		}
+		return $row;
 	}
 
 	/**
-	 * Custom fetch mode
+	 * @param callable $callback func($row)
+	 * @return array|ActiveRow[]
+	 * @throws InvalidArgumentException
+	 */
+	public function fetchMap($callback = null) {
+		if ($callback && !is_callable($callback)) {
+			throw new InvalidArgumentException("Callback is not callable.");
+		}
+		$map = iterator_to_array($this);
+		return $callback ? array_map($callback, $map) : $map;
+	}
+
+	/**
+	 * @deprecated
 	 * @param mixed $hydrator Any hydrator or callback(Statement)
 	 * @return mixed
 	 * @throws \PDOException

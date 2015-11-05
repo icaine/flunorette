@@ -47,6 +47,20 @@ class GroupedSelection extends Selection {
 		return $this;
 	}
 
+	/**
+	 * CAUTION: Usage of this method from GroupedSelection may not work as expected and thus will be removed in future.
+	 * E.g.:
+	 * foreach ($connection->table('author') as $author) {
+	 *   $authorsBooks = $author->related('book')->hydrate('getBookTitle'); // this will always return all book titles of all authors!!!
+	 * }
+	 *
+	 * @deprecated
+	 * @inheritdoc
+	 */
+	public function hydrate($hydrator) {
+		return parent::hydrate($hydrator);
+	}
+
 	public function select($columns) {
 		if (!$this->getSqlBuilder()->getClause('SELECT')) {
 			$this->getSqlBuilder()->select("$this->name.$this->column");
