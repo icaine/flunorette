@@ -78,7 +78,7 @@ class Statement extends PDOStatement {
 		if (is_callable($hydrator)) {
 			return $hydrator($this);
 		} else {
-			throw Exception('Invalid hydrator passed.');
+			throw new InvalidArgumentException('Invalid hydrator passed.');
 		}
 	}
 
